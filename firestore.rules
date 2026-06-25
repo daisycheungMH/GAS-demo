@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /groups/{groupId} {
+      // Anyone with the shareable group ID/link can read or write to their specific group
+      allow read, write: if true;
+    }
+  }
+}

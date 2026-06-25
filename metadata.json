@@ -1,0 +1,6 @@
+{
+  "name": "meetLesbians",
+  "description": "A mobile-first join calendar that helps a small friend group coordinate hangouts and sync everything with a private Google Sheet.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

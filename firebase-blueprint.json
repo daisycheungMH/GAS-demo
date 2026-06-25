@@ -1,0 +1,39 @@
+{
+  "entities": {
+    "Group": {
+      "title": "Group",
+      "description": "A group of friends coordinating meetups, with Google Sheets synchronization.",
+      "type": "object",
+      "properties": {
+        "groupId": { "type": "string", "description": "Unique short code or ID for the group" },
+        "name": { "type": "string", "description": "Display name of the group" },
+        "sheetId": { "type": "string", "description": "The connected Google Sheet ID" },
+        "sheetOwnerUid": { "type": "string", "description": "The Firebase Auth UID of the sheet owner" },
+        "createdAt": { "type": "string", "description": "ISO timestamp when the group was created" },
+        "members": {
+          "type": "array",
+          "description": "List of group members, including name, color, and timezone"
+        },
+        "availability": {
+          "type": "array",
+          "description": "Availability blocks marked by members"
+        },
+        "ideas": {
+          "type": "array",
+          "description": "Proposed meetup ideas in the ideas bucket"
+        },
+        "events": {
+          "type": "array",
+          "description": "Confirmed meetup events"
+        }
+      },
+      "required": ["groupId", "name", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/groups/{groupId}": {
+      "schema": "Group",
+      "description": "Main document storing the complete real-time state of a group"
+    }
+  }
+}

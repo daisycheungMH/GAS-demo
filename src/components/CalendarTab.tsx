@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Group, Event } from "../types";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { formatInTimezone } from "../lib/timezone";
 import { Calendar as CalendarIcon, MapPin, Link, Clock, Check, Users, HelpCircle, XCircle } from "lucide-react";
 
 interface CalendarTabProps {

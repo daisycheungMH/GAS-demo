@@ -250,6 +250,7 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
       {/* Grid view controls */}
       <div className="availability-tab__controls-grid">
         {/* Toggle Mode */}
+        <div className="availability-tab__panel availability-tab__panel--mode retro-inset">
           <div>
             <span className="availability-tab__label">
               📅 Calendar Mode:

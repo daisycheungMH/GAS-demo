@@ -1,6 +1,6 @@
 .app-shell {
   min-height: 100vh;
-  background-color: #111;
+  background-color: var(--color-charcoal);
   background-image: url('https://images.unsplash.com/photo-1538370965046-79c0d6907d47?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-attachment: fixed;
@@ -39,7 +39,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background: #fff;
+  background: var(--color-white);
   padding: 0.25rem;
 }
 
@@ -80,9 +80,9 @@
   position: relative;
   margin: 0.5rem 0;
   overflow: hidden;
-  border: 1px solid #134e4a;
+  border: 1px solid var(--color-accent-teal-dark);
   border-radius: 0.5rem;
-  background: linear-gradient(90deg, #115e59, #052422);
+  background: linear-gradient(90deg, var(--color-accent-teal), var(--color-teal-980));
   padding: 1.25rem;
 
   
@@ -91,8 +91,8 @@
 .app-banner__overlay {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-image: linear-gradient(var(--color-white-alpha-05) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-white-alpha-05) 1px, transparent 1px);
   background-size: 10px 10px;
 }
 
@@ -126,41 +126,41 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.375rem 0.75rem;
-  border: 1px solid #0f766e;
+  border: 1px solid var(--color-teal-700);
   border-radius: 9999px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--color-black-alpha-30);
 }
 
 .app-user-chip__color {
   width: 0.875rem;
   height: 0.875rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--color-white-alpha-20);
 }
 
 .app-free-toggle {
-  color: #000;
+  color: var(--color-black);
   display: flex;
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 0.625rem;
-  border: 1px solid #a16207;
+  border: 1px solid var(--color-amber-700);
   border-radius: 0.25rem;
-  background: #facc15;
+  background: var(--color-amber-400);
   font-family: var(--font-pixel);
   font-size: 0.6875rem;
   font-weight: 700;
 }
 
 .app-free-toggle--active {
-  background: #eab308;
-  border-color: #a16207;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+  background: var(--color-amber-500);
+  border-color: var(--color-amber-700);
+  box-shadow: inset 0 2px 4px var(--color-black-alpha-35);
 }
 
 .app-free-toggle--inactive {
-  background: #facc15;
-  border-color: #ca8a04;
+  background: var(--color-amber-400);
+  border-color: var(--color-amber-600);
 }
 
 .app-tz-pill {
@@ -194,7 +194,7 @@
   gap: 0.25rem;
   margin-bottom: 1rem;
   padding: 0.25rem;
-  border-bottom: 2px solid #7a7a7a;
+  border-bottom: 2px solid var(--color-border-default);
 }
 
 .app-tab {
@@ -210,16 +210,13 @@
 }
 
 .app-tab--active {
-  background: #c0c0c0;
-  border-color: #ffffff;
-  color: #000000;
+  background: var(--color-surface-retro);
+  border-color: var(--color-white);
+  color: var(--color-black);
   font-weight: 700;
   transform: translateY(2px);   
-  px: 3.5;
-  py: 1.5;
   font-family: var(--font-pixel);
   font-size: 0.875rem;
-  md:text-base;
   border-top: 2px solid;
   border-left: 2px solid;
   border-right: 2px solid;
@@ -228,15 +225,12 @@
 }
 
 .app-tab--inactive {
-  background: #a0a0a0;
-  border-color: #808080;
-  color: #374151;
+  background: var(--color-surface-retro-mid);
+  border-color: var(--color-border-dark);
+  color: var(--color-text-secondary);
   transform: translateY(2px);   
-  px: 3.5;
-  py: 1.5;
   font-family: var(--font-pixel);
   font-size: 0.875rem;
-  md:text-base;
   border-top: 2px solid;
   border-left: 2px solid;
   border-right: 2px solid;
@@ -246,14 +240,14 @@
 
 .app-pane {
   padding: 1rem;
-  background: #fff;
+  background: var(--color-white);
   border: 2px solid;
-  border-top-color: #7a7a7a;
-  border-left-color: #7a7a7a;
-  border-right-color: #fff;
-  border-bottom-color: #fff;
+  border-top-color: var(--color-border-default);
+  border-left-color: var(--color-border-default);
+  border-right-color: var(--color-white);
+  border-bottom-color: var(--color-white);
   border-radius: 0.25rem;
-  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 1px 1px 3px var(--color-black-alpha-15);
 }
 
 .app-sidebar {

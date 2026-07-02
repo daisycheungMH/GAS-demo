@@ -364,7 +364,7 @@ export default function SettingsTab({
                       placeholder="Paste Google Sheets URL here..."
                       value={manualSheetUrl}
                       onChange={(e) => setManualSheetUrl(e.target.value)}
-                      className="settings-tab__manual-connect-input flex-1 p-1.5 text-xs rounded bg-white border-2 border-[#7a7a7a] font-mono"
+                      className="settings-tab__manual-connect-input app-input flex-1 text-xs"
                     />
                     <button
                       type="button"
@@ -401,7 +401,7 @@ export default function SettingsTab({
                   <input
                     type="text"
                     value={group.groupId}
-                    className="settings-tab__code-input flex-1 p-2 bg-gray-100 border-2 border-[#7a7a7a] font-mono font-bold text-center uppercase tracking-widest text-lg rounded text-gray-800"
+                    className="settings-tab__code-input app-input app-input--readonly flex-1 font-bold text-center uppercase tracking-widest text-lg text-gray-800"
                     disabled
                   />
                   <button
@@ -423,7 +423,7 @@ export default function SettingsTab({
                   <input
                     type="text"
                     value={inviteLink}
-                    className="settings-tab__link-input flex-1 p-2 bg-gray-100 border-2 border-[#7a7a7a] font-mono text-xs rounded text-gray-700 truncate"
+                    className="settings-tab__link-input app-input app-input--readonly flex-1 text-xs text-gray-700 truncate"
                     disabled
                   />
                   <button
@@ -455,7 +455,7 @@ export default function SettingsTab({
                     <input
                       type="text"
                       value={currentUser}
-                      className="settings-tab__readonly-input w-full p-2 bg-gray-100 border-2 border-[#7a7a7a] font-mono font-bold text-gray-700 rounded text-xs"
+                      className="settings-tab__readonly-input app-input app-input--readonly w-full font-bold text-gray-700 text-xs"
                       disabled
                     />
                   </div>
@@ -468,7 +468,7 @@ export default function SettingsTab({
                     <select
                       value={currentUserData.timezone}
                       onChange={(e) => handleUpdateTimezone(e.target.value)}
-                      className="settings-tab__timezone-select w-full p-2 bg-white border-2 border-[#7a7a7a] text-xs font-mono rounded"
+                      className="settings-tab__timezone-select app-combobox w-full text-xs"
                     >
                       {Intl.supportedValuesOf("timeZone").map((tz) => (
                         <option key={tz} value={tz}>
@@ -486,11 +486,11 @@ export default function SettingsTab({
                   </label>
                   <div className="settings-tab__color-grid flex flex-wrap gap-2 p-2 bg-white rounded border-2 border-[#7a7a7a]">
                     {PRESET_COLORS.map((color) => (
-                      <button
-                        key={color}
-                        type="button"
-                        onClick={() => handleUpdateColor(color)}
-                        className={`settings-tab__color-swatch w-7 h-7 rounded border-2 transition-transform ${
+                        <button
+                          key={color}
+                          type="button"
+                          onClick={() => handleUpdateColor(color)}
+                          className={`w-7 h-7 rounded border-2 transition-transform ${
                           currentUserData.color === color
                             ? "settings-tab__color-swatch--active border-black scale-110 shadow-md"
                             : "border-transparent hover:scale-105"

@@ -20,16 +20,16 @@
   font-size: 0.75rem;
   text-align: left;
   font-weight: 500;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border-light);
   transition: all 0.2s;
   font-family: var(--font-mono);
 }
 
 .suggestions-tab__member-item--active {
-  background-color: #2dd4bf;
-  border-color: #0d9488;
-  color: #042f2e;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: var(--color-teal-400);
+  border-color: var(--color-focus-ring);
+  color: var(--color-teal-960);
+  box-shadow: inset 0 2px 4px var(--color-black-alpha-20);
   font-weight: 700;
 }
 
@@ -44,7 +44,7 @@
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 0.25rem;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-black-alpha-20);
 }
 
 .suggestions-tab__mode-grid {

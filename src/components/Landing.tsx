@@ -229,8 +229,8 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
           )}
 
           {activeTab === "create" ? (
-            <form onSubmit={handleCreateGroup} className="landing-form">
-              <div className="landing-field">
+            <form onSubmit={handleCreateGroup} className="app-form">
+              <div className="app-field">
                 <label className="landing-label">
                   Group Name:
                 </label>
@@ -239,13 +239,13 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
                   value={groupName}
                   onChange={(e) => setGroupName(e.target.value)}
                   placeholder="e.g. Wednesday Wine Girls"
-                  className="landing-input"
+                  className="app-input"
                   maxLength={40}
                   required
                 />
               </div>
 
-              <div className="landing-field">
+              <div className="app-field">
                 <label className="landing-label">
                   Your Nickname:
                 </label>
@@ -256,7 +256,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
                     onChange={(e) => setCreateMemberName(e.target.value)}
                     onFocus={() => setShowCreateNicknameHistory(true)}
                     placeholder="e.g. Daisy"
-                    className="landing-input"
+                    className="app-input"
                     maxLength={20}
                     required
                   />
@@ -276,7 +276,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
               </div>
 
               <div className="landing-two-col">
-                <div className="landing-field">
+                <div className="app-field">
                   <label className="landing-label">
                     Your Color:
                   </label>
@@ -296,7 +296,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
                   </div>
                 </div>
 
-                <div className="landing-field">
+                <div className="app-field">
                   <label className="landing-label">
                     Timezone:
                   </label>
@@ -343,8 +343,8 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
               </button>
             </form>
           ) : (
-            <form onSubmit={handleJoinGroup} className="landing-form">
-              <div className="landing-field">
+            <form onSubmit={handleJoinGroup} className="app-form">
+              <div className="app-field">
                 <label className="landing-label">
                   Group Short Code:
                 </label>
@@ -353,13 +353,13 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
                   value={joinCode}
                   onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
                   placeholder="e.g. ABCDEF"
-                  className="landing-input landing-input--code"
+                  className="app-input landing-input--code"
                   maxLength={8}
                   required
                 />
               </div>
 
-              <div className="landing-field">
+              <div className="app-field">
                 <label className="landing-label">
                   Your Nickname:
                 </label>
@@ -370,7 +370,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
                     onChange={(e) => setJoinMemberName(e.target.value)}
                     onFocus={() => setShowJoinNicknameHistory(true)}
                     placeholder="e.g. Brenda"
-                    className="landing-input"
+                    className="app-input"
                     maxLength={20}
                     required
                   />
@@ -390,7 +390,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
               </div>
 
               <div className="landing-two-col">
-                <div className="landing-field">
+                <div className="app-field">
                   <label className="landing-label">
                     Your Color:
                   </label>
@@ -410,7 +410,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
                   </div>
                 </div>
 
-                <div className="landing-field">
+                <div className="app-field">
                   <label className="landing-label">
                     Timezone:
                   </label>

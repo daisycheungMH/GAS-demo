@@ -275,13 +275,13 @@ export default function IdeasTab({
       </div>
 
       {showAddForm && (
-        <form onSubmit={handleSubmitIdea} className="ideas-tab__form retro-bevel p-4 rounded max-w-lg mx-auto space-y-4">
+        <form onSubmit={handleSubmitIdea} className="app-form app-form--narrow retro-bevel p-4 rounded max-w-lg mx-auto space-y-4">
           <div className="ideas-tab__form-title retro-window-title p-1.5 text-xs font-mono font-bold uppercase tracking-wider -mx-4 -mt-4 mb-2 flex items-center gap-1.5">
             <Plus className="w-4 h-4" />
             New Hangout Draft Proposal
           </div>
 
-          <div className="ideas-tab__field">
+          <div className="app-field">
             <label className="ideas-tab__label">
               Hangout Title (Required):
             </label>
@@ -290,14 +290,14 @@ export default function IdeasTab({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Board game night & Pizza"
-              className="ideas-tab__input ideas-tab__input--title"
+              className="app-input"
               maxLength={50}
               required
             />
           </div>
 
           <div className="ideas-tab__grid ideas-tab__grid--two grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="ideas-tab__field">
+            <div className="app-field">
               <label className="ideas-tab__label">
                 Suggested Date & Time (Optional):
               </label>
@@ -305,11 +305,11 @@ export default function IdeasTab({
                 type="datetime-local"
                 value={datetime}
                 onChange={(e) => setDatetime(e.target.value)}
-                className="ideas-tab__input"
+                className="app-input"
               />
             </div>
 
-            <div className="ideas-tab__field">
+            <div className="app-field">
               <label className="ideas-tab__label">
                 Place / Address (Optional):
               </label>
@@ -318,14 +318,14 @@ export default function IdeasTab({
                 value={place}
                 onChange={(e) => setPlace(e.target.value)}
                 placeholder="e.g. Daisy's living room"
-                className="ideas-tab__input"
+                className="app-input"
                 maxLength={100}
               />
             </div>
           </div>
 
           <div className="ideas-tab__grid ideas-tab__grid--two grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="ideas-tab__field">
+            <div className="app-field">
               <label className="ideas-tab__label">
                 Website / Maps Link (Optional):
               </label>
@@ -334,24 +334,24 @@ export default function IdeasTab({
                 value={links}
                 onChange={(e) => setLinks(e.target.value)}
                 placeholder="https://..."
-                className="ideas-tab__input"
+                className="app-input"
               />
             </div>
 
-            <div className="ideas-tab__field">
+            <div className="app-field">
               <label className="ideas-tab__label">
                 Who Proposes This:
               </label>
               <input
                 type="text"
                 value={currentUser}
-                className="ideas-tab__input ideas-tab__input--readonly"
+                className="app-input app-input--readonly"
                 disabled
               />
             </div>
           </div>
 
-          <div className="ideas-tab__field">
+          <div className="app-field">
             <label className="ideas-tab__label">
               Organizer Notes / Description:
             </label>
@@ -359,7 +359,7 @@ export default function IdeasTab({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g. BYOB! I'll order three vegan pies. Let me know what games to bring!"
-              className="ideas-tab__textarea"
+              className="app-textarea"
               maxLength={300}
             />
           </div>
@@ -742,7 +742,7 @@ export default function IdeasTab({
                   📅 Convert to Confirmed Master Event
                 </span>
                 <div className="ideas-tab__promote-grid grid grid-cols-2 gap-2 mb-3 font-mono">
-                  <div className="ideas-tab__field">
+                  <div className="app-field">
                     <label className="ideas-tab__promote-label block text-[10px] text-gray-700 uppercase mb-0.5 font-bold">Confirmed Date/Time:</label>
                     <input
                       type="datetime-local"
@@ -751,7 +751,7 @@ export default function IdeasTab({
                       className="ideas-tab__promote-input w-full p-1 px-2 text-xs bg-white border border-gray-300 rounded"
                     />
                   </div>
-                  <div className="ideas-tab__field">
+                  <div className="app-field">
                     <label className="ideas-tab__promote-label block text-[10px] text-gray-700 uppercase mb-0.5 font-bold">Confirmed Place:</label>
                     <input
                       type="text"

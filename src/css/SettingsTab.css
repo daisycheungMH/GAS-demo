@@ -69,11 +69,6 @@
   gap: 0.5rem;
 }
 
-.settings-tab__color-swatch {
-  width: 1.75rem;
-  height: 1.75rem;
-}
-
 @media (max-width: 767px) {
   .settings-tab__profile-grid {
     grid-template-columns: 1fr;

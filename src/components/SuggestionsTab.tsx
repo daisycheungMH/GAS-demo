@@ -368,7 +368,7 @@ export default function SuggestionsTab({ group, currentUser, onProposeTime }: Su
               <select
                 value={minDuration}
                 onChange={(e) => setMinDuration(Number(e.target.value))}
-                className="retro-combobox"
+                className="app-combobox"
               >
                 <option value={1}>1 Hour</option>
                 <option value={2}>2 Hours</option>

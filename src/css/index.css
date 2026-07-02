@@ -7,45 +7,122 @@
   --font-sans: "Inter", system-ui, sans-serif;
 }
 
+:root {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-charcoal: #111111;
+
+  --color-border-default: #7a7a7a;
+  --color-border-light: #d1d5db;
+  --color-border-dark: #808080;
+  --color-border-deep: #4a4a4a;
+  --color-divider-muted: #999999;
+
+  --color-surface-retro: #c0c0c0;
+  --color-surface-retro-mid: #a0a0a0;
+  --color-surface-retro-light: #e0e0e0;
+
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #4b5563;
+  --color-text-muted: #9ca3af;
+
+  --color-accent-teal: #115e59;
+  --color-accent-teal-dark: #134e4a;
+  --color-focus-ring: #0d9488;
+
+  --color-teal-50: #f0fdfa;
+  --color-teal-200: #99f6e4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-700: #0f766e;
+  --color-teal-950: #0f2a2a;
+  --color-teal-960: #042f2e;
+  --color-teal-980: #052422;
+
+  --color-blue-100: #dbeafe;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-900: #1e3a8a;
+  --color-blue-win-dark: #000080;
+  --color-blue-win: #1084d0;
+
+  --color-green-100: #dcfce7;
+  --color-green-400: #4ade80;
+  --color-green-800: #166534;
+
+  --color-yellow-300: #fde047;
+  --color-amber-25: #fffbeb;
+  --color-amber-50: #fefce8;
+  --color-amber-200: #fde68a;
+  --color-amber-400: #facc15;
+  --color-amber-500: #eab308;
+  --color-amber-600: #ca8a04;
+  --color-amber-700: #a16207;
+  --color-amber-800: #854d0e;
+  --color-amber-900: #713f12;
+  --color-amber-950: #422006;
+
+  --color-danger-100: #fecaca;
+  --color-danger-600: #dc2626;
+  --color-danger-700: #b91c1c;
+  --color-danger-950: #450a0a;
+
+  --color-input-readonly-bg: #f3f4f6;
+
+  --color-white-alpha-05: rgba(255, 255, 255, 0.05);
+  --color-white-alpha-20: rgba(255, 255, 255, 0.2);
+  --color-white-alpha-60: rgba(255, 255, 255, 0.6);
+  --color-black-alpha-15: rgba(0, 0, 0, 0.15);
+  --color-black-alpha-20: rgba(0, 0, 0, 0.2);
+  --color-black-alpha-25: rgba(0, 0, 0, 0.25);
+  --color-black-alpha-30: rgba(0, 0, 0, 0.3);
+  --color-black-alpha-35: rgba(0, 0, 0, 0.35);
+  --color-black-alpha-50: rgba(0, 0, 0, 0.5);
+  --color-teal-alpha-40: rgba(15, 118, 110, 0.4);
+  --color-amber-alpha-40: rgba(202, 138, 4, 0.4);
+}
+
 /* Custom retro styling definitions */
 .retro-bevel {
-  border-top: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
-  border-right: 2px solid #7a7a7a;
-  border-bottom: 2px solid #7a7a7a;
-  background-color: #c0c0c0;
+  border-top: 2px solid var(--color-white);
+  border-left: 2px solid var(--color-white);
+  border-right: 2px solid var(--color-border-default);
+  border-bottom: 2px solid var(--color-border-default);
+  background-color: var(--color-surface-retro);
 }
 
 .retro-inset {
-  border-top: 2px solid #7a7a7a;
-  border-left: 2px solid #7a7a7a;
-  border-right: 2px solid #ffffff;
-  border-bottom: 2px solid #ffffff;
-  background-color: #e0e0e0;
+  border-top: 2px solid var(--color-border-default);
+  border-left: 2px solid var(--color-border-default);
+  border-right: 2px solid var(--color-white);
+  border-bottom: 2px solid var(--color-white);
+  background-color: var(--color-surface-retro-light);
 }
 
 .retro-button {
-  background-color: #c0c0c0;
-  border-top: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
-  border-right: 2px solid #4a4a4a;
-  border-bottom: 2px solid #4a4a4a;
+  background-color: var(--color-surface-retro);
+  border-top: 2px solid var(--color-white);
+  border-left: 2px solid var(--color-white);
+  border-right: 2px solid var(--color-border-deep);
+  border-bottom: 2px solid var(--color-border-deep);
   transition: all 0.1s ease;
   image-rendering: pixelated;
 }
 
 .retro-button:active {
-  border-top: 2px solid #4a4a4a;
-  border-left: 2px solid #4a4a4a;
-  border-right: 2px solid #ffffff;
-  border-bottom: 2px solid #ffffff;
+  border-top: 2px solid var(--color-border-deep);
+  border-left: 2px solid var(--color-border-deep);
+  border-right: 2px solid var(--color-white);
+  border-bottom: 2px solid var(--color-white);
   padding-top: calc(var(--padding-y, 0.5rem) + 1px);
   padding-bottom: calc(var(--padding-y, 0.5rem) - 1px);
 }
 
 .retro-window-title {
-  background: linear-gradient(90deg, #000080, #1084d0);
-  color: white;
+  background: linear-gradient(90deg, var(--color-blue-win-dark), var(--color-blue-win));
+  color: var(--color-white);
 }
 
 /* Custom scrollbars for a retro win98 look */
@@ -55,40 +132,89 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #e0e0e0;
-  box-shadow: inset 1px 1px 0 #808080;
+  background: var(--color-surface-retro-light);
+  box-shadow: inset 1px 1px 0 var(--color-border-dark);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c0c0c0;
-  border-top: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
-  border-right: 2px solid #808080;
-  border-bottom: 2px solid #808080;
+  background: var(--color-surface-retro);
+  border-top: 2px solid var(--color-white);
+  border-left: 2px solid var(--color-white);
+  border-right: 2px solid var(--color-border-dark);
+  border-bottom: 2px solid var(--color-border-dark);
 }
 
 ::-webkit-scrollbar-button {
   display: block;
-  background: #c0c0c0;
-  border-top: 1px solid #ffffff;
-  border-left: 1px solid #ffffff;
-  border-right: 1px solid #808080;
-  border-bottom: 1px solid #808080;
+  background: var(--color-surface-retro);
+  border-top: 1px solid var(--color-white);
+  border-left: 1px solid var(--color-white);
+  border-right: 1px solid var(--color-border-dark);
+  border-bottom: 1px solid var(--color-border-dark);
   width: 16px;
   height: 16px;
 }
 
 /* Additional custom styles for the app */
 
+.app-combobox,
 .retro-combobox {
   width: 100%;
   padding: 0.5rem;
   font-size: 0.75rem;
   font-weight: 700;
   border-radius: 0.25rem;
-  background-color: #ffffff;
-  border: 2px solid #7a7a7a;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border-default);
   font-family: var(--font-mono);
+}
+
+/* Shared form primitives */
+.app-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.app-form--narrow {
+  max-width: 32rem;
+  width: 100%;
+}
+
+.app-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.app-input,
+.app-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border-default);
+  font-family: var(--font-mono);
+}
+
+.app-textarea {
+  min-height: 5rem;
+  resize: none;
+}
+
+.app-input--readonly {
+  background-color: var(--color-input-readonly-bg);
+  color: var(--color-text-secondary);
+}
+
+.app-input:focus,
+.app-textarea:focus,
+.app-combobox:focus,
+.retro-combobox:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-focus-ring);
 }
 
 /* Shared component primitives */
@@ -135,7 +261,7 @@
 
 /* Shared section header primitives */
 .app-section-header {
-  border-bottom: 2px dashed #999;
+  border-bottom: 2px dashed var(--color-divider-muted);
   padding-bottom: 1rem;
 }
 
@@ -153,7 +279,7 @@
   font-size: 1.5rem;
   line-height: 2rem;
   font-family: var(--font-pixel);
-  color: #134e4a;
+  color: var(--color-accent-teal-dark);
 }
 
 .app-section-subtitle {
@@ -161,7 +287,7 @@
   font-size: 0.75rem;
   line-height: 1rem;
   font-family: var(--font-mono);
-  color: #374151;
+  color: var(--color-text-secondary);
 }
 
 @media (min-width: 768px) {

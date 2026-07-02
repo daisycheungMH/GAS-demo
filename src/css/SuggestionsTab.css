@@ -1,44 +1,11 @@
-.suggestions-tab {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.suggestions-tab__title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.suggestions-tab__layout {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.suggestions-tab__panel {
-  display: flex;
-  flex-direction: column;
-}
-
 .suggestions-tab__panel-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.suggestions-tab__panel-title {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-}
-
 .suggestions-tab__tiny-btn {
   line-height: 1.1;
-}
-
-.suggestions-tab__member-list,
-.suggestions-tab__results-list {
-  overflow-y: auto;
 }
 
 .suggestions-tab__member-item {
@@ -53,9 +20,6 @@
   font-size: 0.75rem;
   text-align: left;
   font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   border: 1px solid #d1d5db;
   transition: all 0.2s;
   font-family: var(--font-mono);

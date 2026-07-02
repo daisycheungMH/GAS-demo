@@ -90,3 +90,83 @@
   border: 2px solid #7a7a7a;
   font-family: var(--font-mono);
 }
+
+/* Shared component primitives */
+.availability-tab,
+.calendar-tab,
+.ideas-tab,
+.settings-tab,
+.suggestions-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.calendar-tab__layout,
+.settings-tab__layout,
+.suggestions-tab__layout {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.settings-tab__sync-panel,
+.settings-tab__invite,
+.settings-tab__profile,
+.suggestions-tab__panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-tab__window-title,
+.suggestions-tab__panel-title {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.calendar-tab__events-list,
+.ideas-tab__list,
+.ideas-tab__modal-body,
+.ideas-tab__attachments,
+.suggestions-tab__member-list,
+.suggestions-tab__results-list {
+  overflow-y: auto;
+}
+
+/* Shared section header primitives */
+.app-section-header {
+  border-bottom: 2px dashed #999;
+  padding-bottom: 1rem;
+}
+
+.app-section-header--split {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.app-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-family: var(--font-pixel);
+  color: #134e4a;
+}
+
+.app-section-subtitle {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-family: var(--font-mono);
+  color: #374151;
+}
+
+@media (min-width: 768px) {
+  .app-section-header--split {
+    flex-direction: row;
+    align-items: center;
+  }
+}

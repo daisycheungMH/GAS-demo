@@ -251,13 +251,13 @@ export default function IdeasTab({
 
   return (
     <div className="ideas-tab">
-      <div className="ideas-tab__header flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-dashed border-[#999] pb-4">
-        <div className="ideas-tab__header-copy">
-          <h2 className="ideas-tab__title text-2xl font-pixel text-teal-950 flex items-center gap-2">
+      <div className="app-section-header app-section-header--split">
+        <div>
+          <h2 className="app-section-title">
             <MessageSquare className="w-5 h-5 text-teal-800" />
             Hangout Ideas Bucket
           </h2>
-          <p className="ideas-tab__subtitle text-xs text-gray-700 font-mono mt-1">
+          <p className="app-section-subtitle">
             Propose hangouts, sign up, post resources/photos, and promote to the master calendar.
           </p>
         </div>

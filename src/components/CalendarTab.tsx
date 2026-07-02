@@ -52,12 +52,12 @@ export default function CalendarTab({ group, currentUser, onSyncNeeded }: Calend
 
   return (
     <div className="calendar-tab">
-      <div className="calendar-tab__header border-b-2 border-dashed border-[#999] pb-4">
-        <h2 className="calendar-tab__title text-2xl font-pixel text-teal-950 flex items-center gap-2">
+      <div className="app-section-header">
+        <h2 className="app-section-title">
           <CalendarIcon className="w-5 h-5 text-teal-800" />
           Confirmed Hangouts Calendar
         </h2>
-        <p className="calendar-tab__subtitle text-xs text-gray-700 font-mono mt-1">
+        <p className="app-section-subtitle">
           RSVP to confirmed meetups and view details. Keep everyone in sync!
         </p>
       </div>

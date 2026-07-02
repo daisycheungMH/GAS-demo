@@ -252,13 +252,13 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
   return (
     <div className="availability-tab" onMouseLeave={handleMouseUp} onMouseUp={handleMouseUp}>
       {/* Title block */}
-      <div className="availability-tab__header">
-        <div className="availability-tab__title-group">
-          <h2 className="availability-tab__title">
+      <div className="app-section-header app-section-header--split">
+        <div>
+          <h2 className="app-section-title">
             <Paintbrush className="w-5 h-5 text-teal-800" />
             Paint Your Availability
           </h2>
-          <p className="availability-tab__subtitle">
+          <p className="app-section-subtitle">
             Drag across the grid to color your blocks. Teal = Free, Yellow = Maybe, Gray = Busy.
           </p>
         </div>

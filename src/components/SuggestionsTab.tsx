@@ -232,12 +232,12 @@ export default function SuggestionsTab({ group, currentUser, onProposeTime }: Su
 
   return (
     <div className="suggestions-tab">
-      <div className="suggestions-tab__header border-b-2 border-dashed border-[#999] pb-4">
-        <h2 className="suggestions-tab__title text-2xl font-pixel text-teal-950 flex items-center gap-2">
+      <div className="app-section-header">
+        <h2 className="app-section-title">
           <Award className="w-5 h-5 text-teal-800" />
           Smart Overlap Finder
         </h2>
-        <p className="suggestions-tab__subtitle text-xs text-gray-700 font-mono mt-1">
+        <p className="app-section-subtitle">
           Select friends, adjust parameters, and calculate the best free slots instantly.
         </p>
       </div>

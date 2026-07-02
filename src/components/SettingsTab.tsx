@@ -209,12 +209,12 @@ export default function SettingsTab({
 
   return (
     <div className="settings-tab">
-      <div className="settings-tab__header border-b-2 border-dashed border-[#999] pb-4">
-        <h2 className="settings-tab__title text-2xl font-pixel text-teal-950 flex items-center gap-2">
+      <div className="app-section-header">
+        <h2 className="app-section-title">
           <Settings className="w-5 h-5 text-teal-800" />
           Settings & Sync Coordinates
         </h2>
-        <p className="settings-tab__subtitle text-xs text-gray-700 font-mono mt-1">
+        <p className="app-section-subtitle">
           Access Master Google Sheets, download instant CSVs, invite group members, or customize your profile.
         </p>
       </div>

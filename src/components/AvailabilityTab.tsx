@@ -285,7 +285,7 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
         {/* Toggle Mode */}
         <div className="availability-tab__panel availability-tab__panel--mode retro-inset">
           <div>
-            <span className="availability-tab__label">
+            <span className="availability-tab__label app-label">
               📅 Calendar Mode:
             </span>
             <div className="availability-tab__mode-grid">
@@ -344,7 +344,7 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
 
         {/* Paint Brush Selector */}
         <div className="availability-tab__panel availability-tab__panel--brush retro-inset">
-          <span className="availability-tab__label">
+          <span className="availability-tab__label app-label">
             🎨 Select Brush Status:
           </span>
           <div className="availability-tab__brush-list">
@@ -390,7 +390,7 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
         {/* Quick Patterns Prefill templates */}
         <div className="availability-tab__panel availability-tab__panel--patterns retro-inset">
           <div>
-            <span className="availability-tab__label">
+            <span className="availability-tab__label app-label">
               ⚡ Quick Patterns Templates:
             </span>
             <div className="availability-tab__patterns-list">

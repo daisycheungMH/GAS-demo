@@ -33,12 +33,6 @@
   font-weight: 700;
 }
 
-.suggestions-tab__member-main {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .suggestions-tab__member-color {
   flex-shrink: 0;
   width: 0.75rem;
@@ -57,21 +51,8 @@
   justify-content: center;
 }
 
-.suggestions-tab__week-picker {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.25rem;
-}
-
 .suggestions-tab__week-label {
   text-align: center;
-}
-
-.suggestions-tab__checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .suggestions-tab__results-empty {

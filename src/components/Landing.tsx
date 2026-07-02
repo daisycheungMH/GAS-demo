@@ -196,7 +196,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
         </div>
 
         {/* Tab Headers */}
-        <div className="landing-tabs">
+        <div className="landing-tabs app-tab-list">
           <button
             onClick={() => setActiveTab("create")}
             className={`landing-tab ${
@@ -231,7 +231,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
           {activeTab === "create" ? (
             <form onSubmit={handleCreateGroup} className="app-form">
               <div className="app-field">
-                <label className="landing-label">
+                <label className="landing-label app-label">
                   Group Name:
                 </label>
                 <input
@@ -246,7 +246,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
               </div>
 
               <div className="app-field">
-                <label className="landing-label">
+                <label className="landing-label app-label">
                   Your Nickname:
                 </label>
                 <div className="landing-nickname-wrap" ref={createNicknameRef}>
@@ -277,7 +277,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
 
               <div className="landing-two-col">
                 <div className="app-field">
-                  <label className="landing-label">
+                  <label className="landing-label app-label">
                     Your Color:
                   </label>
                   <div className="landing-color-box">
@@ -297,7 +297,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
                 </div>
 
                 <div className="app-field">
-                  <label className="landing-label">
+                  <label className="landing-label app-label">
                     Timezone:
                   </label>
                   <select
@@ -345,7 +345,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
           ) : (
             <form onSubmit={handleJoinGroup} className="app-form">
               <div className="app-field">
-                <label className="landing-label">
+                <label className="landing-label app-label">
                   Group Short Code:
                 </label>
                 <input
@@ -360,7 +360,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
               </div>
 
               <div className="app-field">
-                <label className="landing-label">
+                <label className="landing-label app-label">
                   Your Nickname:
                 </label>
                 <div className="landing-nickname-wrap" ref={joinNicknameRef}>
@@ -391,7 +391,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
 
               <div className="landing-two-col">
                 <div className="app-field">
-                  <label className="landing-label">
+                  <label className="landing-label app-label">
                     Your Color:
                   </label>
                   <div className="landing-color-box">
@@ -411,7 +411,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
                 </div>
 
                 <div className="app-field">
-                  <label className="landing-label">
+                  <label className="landing-label app-label">
                     Timezone:
                   </label>
                   <select

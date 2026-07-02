@@ -85,13 +85,8 @@
 }
 
 .ideas-tab__label {
-    display: block;
-    font-size: 0.75rem;
-    font-family: monospace;
-    font-weight: bold;
-    color: var(--color-text-primary);
-    text-transform: uppercase;
-    margin-bottom: 0.25rem;
+  margin-bottom: 0.25rem;
+  color: var(--color-text-primary);
 }
 
 .ideas-tab__modal {

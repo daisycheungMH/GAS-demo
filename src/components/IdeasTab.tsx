@@ -282,7 +282,7 @@ export default function IdeasTab({
           </div>
 
           <div className="app-field">
-            <label className="ideas-tab__label">
+            <label className="ideas-tab__label app-label">
               Hangout Title (Required):
             </label>
             <input
@@ -298,7 +298,7 @@ export default function IdeasTab({
 
           <div className="ideas-tab__grid ideas-tab__grid--two grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="app-field">
-              <label className="ideas-tab__label">
+              <label className="ideas-tab__label app-label">
                 Suggested Date & Time (Optional):
               </label>
               <input
@@ -310,7 +310,7 @@ export default function IdeasTab({
             </div>
 
             <div className="app-field">
-              <label className="ideas-tab__label">
+              <label className="ideas-tab__label app-label">
                 Place / Address (Optional):
               </label>
               <input
@@ -326,7 +326,7 @@ export default function IdeasTab({
 
           <div className="ideas-tab__grid ideas-tab__grid--two grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="app-field">
-              <label className="ideas-tab__label">
+              <label className="ideas-tab__label app-label">
                 Website / Maps Link (Optional):
               </label>
               <input
@@ -339,7 +339,7 @@ export default function IdeasTab({
             </div>
 
             <div className="app-field">
-              <label className="ideas-tab__label">
+              <label className="ideas-tab__label app-label">
                 Who Proposes This:
               </label>
               <input
@@ -352,7 +352,7 @@ export default function IdeasTab({
           </div>
 
           <div className="app-field">
-            <label className="ideas-tab__label">
+            <label className="ideas-tab__label app-label">
               Organizer Notes / Description:
             </label>
             <textarea

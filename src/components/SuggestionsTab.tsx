@@ -246,7 +246,7 @@ export default function SuggestionsTab({ group, currentUser, onProposeTime }: Su
         {/* Member Selector Box */}
         <div className="suggestions-tab__panel suggestions-tab__panel--members retro-bevel p-3 rounded">
           <div className="suggestions-tab__panel-head flex items-center justify-between border-b border-[#999] pb-2 mb-2">
-            <span className="suggestions-tab__panel-title text-xs font-mono font-bold text-gray-800 uppercase flex items-center gap-1.5">
+            <span className="suggestions-tab__panel-title app-panel-title text-gray-800">
               <Users className="w-4 h-4 text-teal-800" />
               1. Select People:
             </span>
@@ -282,7 +282,7 @@ export default function SuggestionsTab({ group, currentUser, onProposeTime }: Su
                       : "suggestions-tab__member-item"
                   }`}
                 >
-                  <div className="suggestions-tab__member-main">
+                  <div className="suggestions-tab__member-main app-main-row">
                     <span
                       className="suggestions-tab__member-color"
                       style={{ backgroundColor: member.color }}
@@ -306,14 +306,14 @@ export default function SuggestionsTab({ group, currentUser, onProposeTime }: Su
         {/* Adjust Suggestions Parameters */}
         <div className="suggestions-tab__panel suggestions-tab__panel--rules retro-bevel p-3 rounded flex flex-col justify-between">
           <div className="suggestions-tab__rules-body space-y-4">
-            <span className="suggestions-tab__panel-title block text-xs font-mono font-bold text-gray-800 uppercase border-b border-[#999] pb-2 mb-2 flex items-center gap-1.5">
+            <span className="suggestions-tab__panel-title app-panel-title block text-gray-800 border-b border-[#999] pb-2 mb-2">
               <Clock className="w-4 h-4 text-teal-800" />
               2. Overlap Rules:
             </span>
 
             {/* Calendar Mode */}
             <div>
-              <label className="suggestions-tab__label block text-[11px] font-mono font-bold text-gray-700 uppercase mb-1">
+              <label className="suggestions-tab__label app-label app-label--sm mb-1">
                 Calendar Schedule:
               </label>
               <div className="suggestions-tab__mode-grid grid grid-cols-2 gap-1">
@@ -338,7 +338,7 @@ export default function SuggestionsTab({ group, currentUser, onProposeTime }: Su
               </div>
 
               {selectedMode === "specific" && (
-                <div className="suggestions-tab__week-picker mt-1.5 flex items-center justify-between gap-1 bg-white/80 p-1.5 rounded border border-gray-300">
+                <div className="suggestions-tab__week-picker app-picker-row mt-1.5 bg-white/80 p-1.5 rounded border border-gray-300">
                   <button
                     onClick={() => setSelectedWeekOffset((p) => Math.max(0, p - 1))}
                     disabled={selectedWeekOffset === 0}
@@ -346,7 +346,7 @@ export default function SuggestionsTab({ group, currentUser, onProposeTime }: Su
                   >
                     &lt;
                   </button>
-                  <span className="suggestions-tab__week-label text-[10px] font-mono font-bold text-center flex-1">
+                  <span className="suggestions-tab__week-label app-picker-label">
                     {getWeekDateRangeStr(selectedWeekOffset)}
                   </span>
                   <button
@@ -362,7 +362,7 @@ export default function SuggestionsTab({ group, currentUser, onProposeTime }: Su
 
             {/* Min Duration */}
             <div>
-              <label className="suggestions-tab__label block text-[11px] font-mono font-bold text-gray-700 uppercase mb-1">
+              <label className="suggestions-tab__label app-label app-label--sm mb-1">
                 Minimum Duration:
               </label>
               <select
@@ -378,7 +378,7 @@ export default function SuggestionsTab({ group, currentUser, onProposeTime }: Su
             </div>
 
             {/* Prefer weekends/evenings */}
-            <label className="suggestions-tab__checkbox-row flex items-center gap-2 cursor-pointer bg-white/40 p-2 rounded border border-gray-200">
+            <label className="suggestions-tab__checkbox-row app-checkbox-row cursor-pointer bg-white/40 p-2 rounded border border-gray-200">
               <input
                 type="checkbox"
                 checked={preferWeekendsEvenings}
@@ -403,7 +403,7 @@ export default function SuggestionsTab({ group, currentUser, onProposeTime }: Su
         {/* Suggestion Outputs */}
         <div className="suggestions-tab__panel suggestions-tab__panel--results retro-bevel p-3 rounded md:col-span-1 flex flex-col justify-between min-h-[300px]">
           <div>
-            <span className="suggestions-tab__panel-title block text-xs font-mono font-bold text-gray-800 uppercase border-b border-[#999] pb-2 mb-3 flex items-center gap-1.5">
+            <span className="suggestions-tab__panel-title app-panel-title block text-gray-800 border-b border-[#999] pb-2 mb-3">
               <Calendar className="w-4 h-4 text-teal-800" />
               3. Overlap Suggestions:
             </span>

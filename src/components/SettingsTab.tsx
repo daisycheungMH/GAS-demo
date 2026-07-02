@@ -394,7 +394,7 @@ export default function SettingsTab({
             <div className="settings-tab__invite-body space-y-3.5">
               {/* Short code */}
               <div>
-                <label className="settings-tab__label block text-[10px] font-mono text-gray-600 uppercase mb-1">
+                <label className="settings-tab__label app-label app-label--tiny mb-1">
                   Group Short Code:
                 </label>
                 <div className="settings-tab__copy-row flex items-center gap-1.5">
@@ -416,7 +416,7 @@ export default function SettingsTab({
 
               {/* Direct URL Link */}
               <div>
-                <label className="settings-tab__label block text-[10px] font-mono text-gray-600 uppercase mb-1">
+                <label className="settings-tab__label app-label app-label--tiny mb-1">
                   Direct Invite Link:
                 </label>
                 <div className="settings-tab__copy-row flex items-center gap-1.5">
@@ -449,7 +449,7 @@ export default function SettingsTab({
                 <div className="settings-tab__profile-grid grid grid-cols-2 gap-4">
                   {/* Nickname Readonly */}
                   <div>
-                    <label className="settings-tab__label block text-[10px] font-mono text-gray-600 uppercase mb-1">
+                    <label className="settings-tab__label app-label app-label--tiny mb-1">
                       Your Active Nickname:
                     </label>
                     <input
@@ -462,7 +462,7 @@ export default function SettingsTab({
 
                   {/* Timezone Switcher */}
                   <div>
-                    <label className="settings-tab__label block text-[10px] font-mono text-gray-600 uppercase mb-1">
+                    <label className="settings-tab__label app-label app-label--tiny mb-1">
                       Your Local Timezone:
                     </label>
                     <select
@@ -481,7 +481,7 @@ export default function SettingsTab({
 
                 {/* Color swatch selection */}
                 <div>
-                  <label className="settings-tab__label block text-[10px] font-mono text-gray-600 uppercase mb-1">
+                  <label className="settings-tab__label app-label app-label--tiny mb-1">
                     Your Color Badge Accent:
                   </label>
                   <div className="settings-tab__color-grid flex flex-wrap gap-2 p-2 bg-white rounded border-2 border-[#7a7a7a]">

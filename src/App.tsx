@@ -4,6 +4,7 @@ import { db, initAuth } from "./lib/firebase";
 import { Group, Idea, Member } from "./types";
 import { syncGroupToSheet, syncGroupFromSheet } from "./lib/sheets";
 import { getAccessToken } from "./lib/firebase";
+import "./css/App.css";
 import Landing from "./components/Landing";
 import AvailabilityTab from "./components/AvailabilityTab";
 import SuggestionsTab from "./components/SuggestionsTab";
@@ -308,12 +309,9 @@ export default function App() {
   // Retro loading screen
   if (loadingGroup || !group) {
     return (
-      <div 
-        className="min-h-screen bg-[#111] bg-cover bg-fixed bg-center flex flex-col justify-center items-center font-mono text-white p-4"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1538370965046-79c0d6907d47?auto=format&fit=crop&w=1920&q=80')" }}
-      >
-        <div className="retro-bevel p-6 max-w-sm w-full text-center space-y-4">
-          <div className="text-xl font-pixel text-yellow-300 uppercase tracking-wider flex items-center justify-center gap-1">
+      <div className="app-shell app-shell--loading font-mono text-white">
+        <div className="app-loading-panel retro-bevel">
+          <div className="app-loading-title text-xl font-pixel text-yellow-300 uppercase tracking-wider flex items-center justify-center gap-1">
             <span>::: Loading the gay agenda</span>
             <span className="inline-flex gap-0.5">
               <span className="animate-[bounce_1s_infinite_0ms]">.</span>
@@ -323,13 +321,13 @@ export default function App() {
             <span> :::</span>
           </div>
           {/* Windows 95 Progress bar */}
-          <div className="retro-inset p-1 bg-white h-8 relative overflow-hidden flex items-center justify-start">
-            <div className="h-full bg-teal-800 animate-[pulse_1.5s_infinite]" style={{ width: "80%" }}></div>
-            <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-gray-800 select-none">
+          <div className="app-progress retro-inset">
+            <div className="app-progress__fill bg-teal-800 animate-[pulse_1.5s_infinite]"></div>
+            <div className="app-progress__label absolute inset-0 flex items-center justify-center text-xs font-bold text-gray-800 select-none">
               INITIALIZING SYNC_ENGINE.SYS...
             </div>
           </div>
-          <p className="text-[10px] text-gray-200 uppercase tracking-widest">
+          <p className="app-loading-copy text-[10px] text-gray-200 uppercase tracking-widest">
             retrieving google sheet nodes...
           </p>
         </div>
@@ -341,18 +339,15 @@ export default function App() {
   const myData = group.members.find((m) => m.name === memberName);
 
   return (
-    <div 
-      className="min-h-screen bg-[#111] bg-cover bg-fixed bg-center p-4 font-sans select-none pb-12"
-      style={{ backgroundImage: "url('https://images.unsplash.com/photo-1538370965046-79c0d6907d47?auto=format&fit=crop&w=1920&q=80')" }}
-    >
+    <div className="app-shell font-sans select-none">
       {/* 1. Master Desktop Title bar */}
-      <div className="w-full max-w-7xl mx-auto retro-bevel p-1 shadow-2xl bg-[#c0c0c0] mb-4">
-        <div className="retro-window-title flex items-center justify-between p-1.5 px-3 select-none">
+      <div className="app-window retro-bevel shadow-2xl bg-[#c0c0c0]">
+        <div className="app-window__title retro-window-title select-none">
           <div className="flex items-center gap-2 font-mono font-bold text-xs md:text-sm tracking-wider uppercase text-white">
             <Calendar className="w-4 h-4 text-yellow-300" />
             meetLesbians - {group.name} (Code: {group.groupId})
           </div>
-          <div className="flex gap-2 items-center">
+          <div className="app-window__actions">
             {isOwnerConnected && (
               <span className="text-[10px] bg-emerald-700 border border-emerald-500 text-emerald-100 px-1.5 py-0.5 rounded font-mono font-bold uppercase animate-pulse">
                 Sheet Sync Active
@@ -377,82 +372,75 @@ export default function App() {
         </div>
 
         {/* 2. Geometric Header Banner */}
-        <div className="bg-gradient-to-r from-teal-800 to-teal-950 border border-teal-950 p-5 rounded-lg my-2 text-center relative overflow-hidden flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:10px_10px]"></div>
-          
-          <div className="text-left z-10 relative">
-            <h1 className="text-3xl md:text-4xl font-pixel text-yellow-300 tracking-wide drop-shadow">
-              meetLesbians
-            </h1>
-            <p className="text-[10px] font-mono text-teal-200 uppercase tracking-widest mt-0.5">
-              ::: {group.name} - join calendar :::
-            </p>
-          </div>
+        <div className="app-banner">
+          <div className="app-banner__overlay"></div>
 
-          <div className="flex flex-wrap items-center gap-3 z-10 relative">
-            {myData && (
-              <div className="flex items-center gap-2 bg-black/30 p-1.5 px-3 rounded-full border border-teal-600">
-                <span
-                  className="w-3.5 h-3.5 rounded-full border border-white/20"
-                  style={{ backgroundColor: myData.color }}
-                ></span>
-                <span className="text-xs font-mono font-bold text-teal-100 uppercase">
-                  Logged as: {memberName}
-                </span>
+          <div className="app-banner__content">
+            <div className="app-banner__title-wrap">
+              <h1 className="app-banner__title text-3xl md:text-4xl font-pixel text-yellow-300 tracking-wide drop-shadow">
+                meetLesbians
+              </h1>
+              <p className="app-banner__subtitle text-[10px] font-mono text-teal-200 uppercase tracking-widest mt-0.5">
+                ::: {group.name} - join calendar :::
+              </p>
+            </div>
+
+            <div className="app-banner__status">
+              {myData && (
+                <div className="app-user-chip">
+                  <span
+                    className="app-user-chip__color"
+                    style={{ backgroundColor: myData.color }}
+                  ></span>
+                  <span className="app-user-chip__label text-xs font-mono font-bold text-teal-100 uppercase">
+                    Logged as: {memberName}
+                  </span>
+                </div>
+              )}
+
+              {memberName && (() => {
+                const isCurrentlyFree = freeNowTimer[memberName] && freeNowTimer[memberName] > Date.now();
+                return (
+                  <button
+                    onClick={handleFreeNowPing}
+                    className={`app-free-toggle font-pixel text-[11px] font-bold flex items-center gap-1 rounded shadow retro-button ${
+                      isCurrentlyFree ? "app-free-toggle--active" : "app-free-toggle--inactive"
+                    }`}
+                    title={isCurrentlyFree ? "You are marked as Free! Click to toggle off." : "Broadcast to group that you are free now for 2 hours"}
+                  >
+                    <Smile className="w-3.5 h-3.5" />
+                    {isCurrentlyFree ? "I'M FREE (ON)" : "I'M FREE NOW"}
+                  </button>
+                );
+              })()}
+
+              <div className="app-tz-pill text-[11px] font-mono text-teal-100 bg-teal-900/80 p-1.5 px-3 rounded border border-teal-700">
+                Your TZ: {getLocalTimezone().split("/").pop()?.replace("_", " ")}
               </div>
-            )}
-
-            {memberName && (() => {
-              const isCurrentlyFree = freeNowTimer[memberName] && freeNowTimer[memberName] > Date.now();
-              return (
-                <button
-                  onClick={handleFreeNowPing}
-                  className={`px-2.5 py-1 font-pixel text-[11px] font-bold flex items-center gap-1 rounded shadow retro-button ${
-                    isCurrentlyFree
-                      ? "bg-yellow-500 hover:bg-yellow-400 border-yellow-700 text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.35)]"
-                      : "bg-yellow-400 hover:bg-yellow-300 border-yellow-600 text-black"
-                  }`}
-                  title={isCurrentlyFree ? "You are marked as Free! Click to toggle off." : "Broadcast to group that you are free now for 2 hours"}
-                >
-                  <Smile className="w-3.5 h-3.5" />
-                  {isCurrentlyFree ? "I'M FREE (ON)" : "I'M FREE NOW"}
-                </button>
-              );
-            })()}
-            
-            <div className="text-[11px] font-mono text-teal-100 bg-teal-900/80 p-1.5 px-3 rounded border border-teal-700">
-              Your TZ: {getLocalTimezone().split("/").pop()?.replace("_", " ")}
             </div>
           </div>
         </div>
-      </div>
 
-      {/* 3. Main Bento Grid Layout */}
-      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-        {/* Left Bento: Main Tabbed Workspace (65% width, or 100% width if not availability tab) */}
-        <div className={`${activeTab === "availability" ? "lg:col-span-8" : "lg:col-span-12"} space-y-4`}>
-          <div className="retro-bevel p-1 bg-[#c0c0c0]">
-            {/* Retro Desktop Tabs Row */}
-            <div className="flex flex-wrap border-b-2 border-[#7a7a7a] mb-4 gap-1 p-1">
-              <button
-                onClick={() => setActiveTab("availability")}
-                className={`px-3.5 py-1.5 font-pixel text-sm md:text-base border-t-2 border-l-2 border-r-2 rounded-t-md transition-all flex items-center gap-1.5 ${
-                  activeTab === "availability"
-                    ? "bg-[#c0c0c0] border-white text-black font-bold translate-y-[2px]"
-                    : "bg-[#a0a0a0] border-[#808080] text-gray-700 hover:bg-[#b0b0b0]"
-                }`}
-              >
-                <Users className="w-4 h-4 text-teal-800" />
-                Availability
-              </button>
+        </div>
+
+        {/* 3. Main Bento Grid Layout */}
+        <div className="app-layout grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+          {/* Left Bento: Main Tabbed Workspace (65% width, or 100% width if not availability tab) */}
+          <div className={`${activeTab === "availability" ? "app-main app-main--availability" : "app-main app-main--full"}`}>
+            <div className="app-tabframe retro-bevel bg-[#c0c0c0]">
+              {/* Retro Desktop Tabs Row */}
+              <div className="app-tabs">
+                <button
+                  onClick={() => setActiveTab("availability")}
+                  className={`app-tab app-tab--availability ${activeTab === "availability" ? "app-tab--active" : "app-tab--inactive"}`}
+                >
+                  <Users className="w-4 h-4 text-teal-800" />
+                  Availability
+                </button>
 
               <button
                 onClick={() => setActiveTab("suggestions")}
-                className={`px-3.5 py-1.5 font-pixel text-sm md:text-base border-t-2 border-l-2 border-r-2 rounded-t-md transition-all flex items-center gap-1.5 ${
-                  activeTab === "suggestions"
-                    ? "bg-[#c0c0c0] border-white text-black font-bold translate-y-[2px]"
-                    : "bg-[#a0a0a0] border-[#808080] text-gray-700 hover:bg-[#b0b0b0]"
-                }`}
+                className={`app-tab app-tab--suggestions ${activeTab === "suggestions" ? "app-tab--active" : "app-tab--inactive"}`}
               >
                 <Award className="w-4 h-4 text-indigo-800" />
                 Find Overlaps
@@ -460,11 +448,7 @@ export default function App() {
 
               <button
                 onClick={() => setActiveTab("ideas")}
-                className={`px-3.5 py-1.5 font-pixel text-sm md:text-base border-t-2 border-l-2 border-r-2 rounded-t-md transition-all flex items-center gap-1.5 ${
-                  activeTab === "ideas"
-                    ? "bg-[#c0c0c0] border-white text-black font-bold translate-y-[2px]"
-                    : "bg-[#a0a0a0] border-[#808080] text-gray-700 hover:bg-[#b0b0b0]"
-                }`}
+                className={`app-tab app-tab--ideas ${activeTab === "ideas" ? "app-tab--active" : "app-tab--inactive"}`}
               >
                 <MessageSquare className="w-4 h-4 text-pink-700" />
                 Ideas Bucket
@@ -472,11 +456,7 @@ export default function App() {
 
               <button
                 onClick={() => setActiveTab("calendar")}
-                className={`px-3.5 py-1.5 font-pixel text-sm md:text-base border-t-2 border-l-2 border-r-2 rounded-t-md transition-all flex items-center gap-1.5 ${
-                  activeTab === "calendar"
-                    ? "bg-[#c0c0c0] border-white text-black font-bold translate-y-[2px]"
-                    : "bg-[#a0a0a0] border-[#808080] text-gray-700 hover:bg-[#b0b0b0]"
-                }`}
+                className={`app-tab app-tab--calendar ${activeTab === "calendar" ? "app-tab--active" : "app-tab--inactive"}`}
               >
                 <Calendar className="w-4 h-4 text-yellow-700" />
                 Calendar
@@ -484,11 +464,7 @@ export default function App() {
 
               <button
                 onClick={() => setActiveTab("settings")}
-                className={`px-3.5 py-1.5 font-pixel text-sm md:text-base border-t-2 border-l-2 border-r-2 rounded-t-md transition-all flex items-center gap-1.5 ${
-                  activeTab === "settings"
-                    ? "bg-[#c0c0c0] border-white text-black font-bold translate-y-[2px]"
-                    : "bg-[#a0a0a0] border-[#808080] text-gray-700 hover:bg-[#b0b0b0]"
-                }`}
+                className={`app-tab app-tab--settings ${activeTab === "settings" ? "app-tab--active" : "app-tab--inactive"}`}
               >
                 <SettingsIcon className="w-4 h-4 text-gray-700" />
                 Settings
@@ -496,7 +472,7 @@ export default function App() {
             </div>
 
             {/* Active Tab Screen Render - Beautiful White Canvas in Retro Frame */}
-            <div className="p-4 bg-white border-2 border-t-[#7a7a7a] border-l-[#7a7a7a] border-r-white border-b-white rounded shadow-[inset_1px_1px_3px_rgba(0,0,0,0.15)] text-gray-900">
+            <div className="app-pane text-gray-900">
               {activeTab === "availability" && (
                 <AvailabilityTab group={group} currentUser={memberName} onSyncNeeded={onSyncNeeded} />
               )}
@@ -530,15 +506,15 @@ export default function App() {
 
         {/* Right Bento: Sidebar Directories & Widgets (35% width) - ONLY rendered on the first page/tab */}
         {activeTab === "availability" && (
-          <div className="lg:col-span-4 space-y-4">
+          <div className="app-sidebar">
             {/* Directory Panel */}
-            <div className="retro-bevel p-3 rounded">
-              <span className="block text-xs font-mono font-bold text-gray-800 uppercase border-b border-[#999] pb-2 flex items-center gap-1.5 mb-3">
+            <div className="app-directory retro-bevel p-3 rounded">
+              <span className="app-directory__title block text-xs font-mono font-bold text-gray-800 uppercase border-b border-[#999] pb-2 flex items-center gap-1.5 mb-3">
                 <Users className="w-4 h-4 text-teal-800" />
                 Friends In This Group:
               </span>
 
-              <div className="space-y-2">
+              <div className="app-member-list space-y-2">
                 {group.members.map((m) => {
                   const isFreeNow = freeNowTimer[m.name] && freeNowTimer[m.name] > Date.now();
                   const diffSec = isFreeNow ? Math.floor((freeNowTimer[m.name] - Date.now()) / 1000) : 0;
@@ -547,25 +523,25 @@ export default function App() {
                   return (
                     <div
                       key={m.name}
-                      className="flex items-center justify-between p-2.5 bg-white/70 border border-gray-300 rounded font-mono text-xs"
+                      className="app-member-row flex items-center justify-between p-2.5 bg-white/70 border border-gray-300 rounded font-mono text-xs"
                     >
-                      <div className="flex items-center gap-2">
+                      <div className="app-member-row__left flex items-center gap-2">
                         <span
-                          className="w-3.5 h-3.5 rounded-full border border-black/10 flex-shrink-0"
+                          className="app-member-dot w-3.5 h-3.5 rounded-full border border-black/10 flex-shrink-0"
                           style={{ backgroundColor: m.color }}
                         ></span>
-                        <span className="font-bold text-gray-900">
+                        <span className="app-member-name font-bold text-gray-900">
                           {m.name} {m.name === memberName ? "(You)" : ""}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="app-member-row__right flex items-center gap-2">
                         {isFreeNow ? (
-                          <span className="text-[9px] bg-green-100 border border-green-500 text-green-800 px-1.5 py-0.5 rounded font-bold animate-pulse">
+                          <span className="app-free-pill text-[9px] bg-green-100 border border-green-500 text-green-800 px-1.5 py-0.5 rounded font-bold animate-pulse">
                             FREE NOW ({minLeft}m)
                           </span>
                         ) : (
-                          <span className="text-[10px] text-gray-600">
+                          <span className="app-member-timezone text-[10px] text-gray-600">
                             {m.timezone.split("/").pop()?.replace("_", " ")}
                           </span>
                         )}
@@ -577,7 +553,7 @@ export default function App() {
             </div>
 
             {/* Privacy statement footer block */}
-            <div className="retro-bevel p-3 rounded text-center text-[10px] font-mono text-gray-600 flex items-center justify-center gap-1">
+            <div className="app-privacy retro-bevel p-3 rounded text-center text-[10px] font-mono text-gray-600 flex items-center justify-center gap-1">
               <Lock className="w-3.5 h-3.5 text-teal-800" />
               Your data lives in your Google Sheet — we don't sell it!
             </div>

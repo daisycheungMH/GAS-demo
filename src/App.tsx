@@ -403,7 +403,7 @@ export default function App() {
                 return (
                   <button
                     onClick={handleFreeNowPing}
-                    className={`app-free-toggle font-pixel text-[11px] font-bold flex items-center gap-1 rounded shadow retro-button ${
+                    className={`app-free-toggle retro-button ${
                       isCurrentlyFree ? "app-free-toggle--active" : "app-free-toggle--inactive"
                     }`}
                     title={isCurrentlyFree ? "You are marked as Free! Click to toggle off." : "Broadcast to group that you are free now for 2 hours"}

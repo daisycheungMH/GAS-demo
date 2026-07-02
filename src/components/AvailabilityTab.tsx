@@ -382,7 +382,7 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
               Busy / Eraser (Gray)
             </button>
             <p className="availability-tab__mode-note">
-              You can right-click on a cell to quickly erase it without changing your brush.
+              If you're on PC, you can right-click on a cell to quickly erase it without changing your brush.
             </p>
           </div>
         </div>

@@ -1,0 +1,244 @@
+.ideas-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ideas-tab__input,
+.ideas-tab__input--title {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  background-color: #ffffff;
+  border: 2px solid #7a7a7a;
+  font-family: var(--font-mono);
+}
+
+.ideas-tab__header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.ideas-tab__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ideas-tab__toggle-btn,
+.ideas-tab__find-btn,
+.ideas-tab__promote-btn {
+  white-space: nowrap;
+}
+
+.ideas-tab__submit {
+  width: 100%;
+  text-align: center;
+  padding: 0.625rem;
+  font-family: var(--font-pixel);
+  font-size: 1.125rem;
+  color: #ffffff;
+  background-color: #2563eb;
+  border: 2px solid #1e40af;
+  border-radius: 0.25rem;
+  transition: background-color 0.15s ease;
+}
+
+.ideas-tab__submit:hover {
+  background-color: #3b82f6;
+}
+.ideas-tab__form {
+  max-width: 32rem;
+  width: 100%;
+}
+
+.ideas-tab__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.ideas-tab__grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.ideas-tab__input,
+.ideas-tab__textarea,
+.ideas-tab__duration,
+.ideas-tab__upload-input,
+.ideas-tab__promote-input {
+  width: 100%;
+}
+
+.ideas-tab__textarea {
+  height: 5rem;
+  resize: none;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  background-color: #ffffff;
+  border: 2px solid #7a7a7a;
+  font-family: var(--font-mono);
+}
+
+.ideas-tab__sort {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #dcdcdc;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #9ca3af;
+}
+
+
+.ideas-tab__sort-btn {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 0.25rem;
+}
+
+.ideas-tab__sort-buttons {
+  display: flex;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+}
+
+.ideas-tab__board-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ideas-tab__list,
+.ideas-tab__modal-body,
+.ideas-tab__attachments {
+  overflow-y: auto;
+}
+
+.ideas-tab__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ideas-tab__card-main {
+  min-width: 0;
+}
+
+.ideas-tab__card-side {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ideas-tab__badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-end;
+}
+
+.ideas-tab__label {
+    display: block;
+    font-size: 0.75rem;
+    font-family: monospace;
+    font-weight: bold;
+    color: #1f2937;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.ideas-tab__modal {
+  z-index: 50;
+}
+
+.ideas-tab__modal-window {
+  max-width: 32rem;
+}
+
+.ideas-tab__modal-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ideas-tab__details-grid,
+.ideas-tab__promote-grid,
+.ideas-tab__rsvp-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.ideas-tab__signup-list {
+  min-height: 2.5rem;
+}
+
+.ideas-tab__rsvp-actions,
+.ideas-tab__upload-tabs,
+.ideas-tab__upload-row,
+.ideas-tab__attachment {
+  display: flex;
+}
+
+.ideas-tab__attachment {
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ideas-tab__attachment-main {
+  min-width: 0;
+}
+
+.ideas-tab__attachment-image {
+  width: 3rem;
+  height: 3rem;
+}
+
+.ideas-tab__modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .ideas-tab__header {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .ideas-tab__grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .ideas-tab__card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ideas-tab__card-side {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .ideas-tab__details-grid,
+  .ideas-tab__promote-grid,
+  .ideas-tab__rsvp-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .ideas-tab__modal-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+}

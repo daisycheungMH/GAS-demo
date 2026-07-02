@@ -77,3 +77,16 @@
   width: 16px;
   height: 16px;
 }
+
+/* Additional custom styles for the app */
+
+.retro-combobox {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 0.25rem;
+  background-color: #ffffff;
+  border: 2px solid #7a7a7a;
+  font-family: var(--font-mono);
+}

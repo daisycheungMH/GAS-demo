@@ -3,6 +3,7 @@ import { Group, Idea, Event, IdeaAttachment } from "../types";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { Heart, MessageSquare, Plus, Link, Calendar, MapPin, ArrowRight, Trash2, Filter, ThumbsUp, Paperclip, CheckCircle, Image, ExternalLink, MessageCircle } from "lucide-react";
+import "../css/IdeasTab.css";
 
 interface IdeasTabProps {
   group: Group;
@@ -249,14 +250,14 @@ export default function IdeasTab({
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-dashed border-[#999] pb-4">
-        <div>
-          <h2 className="text-2xl font-pixel text-teal-950 flex items-center gap-2">
+    <div className="ideas-tab">
+      <div className="ideas-tab__header flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-dashed border-[#999] pb-4">
+        <div className="ideas-tab__header-copy">
+          <h2 className="ideas-tab__title text-2xl font-pixel text-teal-950 flex items-center gap-2">
             <MessageSquare className="w-5 h-5 text-teal-800" />
             Hangout Ideas Bucket
           </h2>
-          <p className="text-xs text-gray-700 font-mono mt-1">
+          <p className="ideas-tab__subtitle text-xs text-gray-700 font-mono mt-1">
             Propose hangouts, sign up, post resources/photos, and promote to the master calendar.
           </p>
         </div>
@@ -266,7 +267,7 @@ export default function IdeasTab({
             setShowAddForm(!showAddForm);
             if (showAddForm) clearPrefilledProposal();
           }}
-          className="retro-button p-2.5 text-xs font-bold bg-teal-800 text-white border-teal-950 flex items-center gap-1.5 self-start md:self-auto"
+          className="ideas-tab__toggle-btn retro-button p-2.5 text-xs font-bold bg-teal-800 text-white border-teal-950 flex items-center gap-1.5 self-start md:self-auto"
         >
           <Plus className="w-4 h-4" />
           {showAddForm ? "Cancel Proposal" : "Propose Hangout Idea"}
@@ -274,14 +275,14 @@ export default function IdeasTab({
       </div>
 
       {showAddForm && (
-        <form onSubmit={handleSubmitIdea} className="retro-bevel p-4 rounded max-w-lg mx-auto space-y-4">
-          <div className="retro-window-title p-1.5 text-xs font-mono font-bold uppercase tracking-wider -mx-4 -mt-4 mb-2 flex items-center gap-1.5">
+        <form onSubmit={handleSubmitIdea} className="ideas-tab__form retro-bevel p-4 rounded max-w-lg mx-auto space-y-4">
+          <div className="ideas-tab__form-title retro-window-title p-1.5 text-xs font-mono font-bold uppercase tracking-wider -mx-4 -mt-4 mb-2 flex items-center gap-1.5">
             <Plus className="w-4 h-4" />
             New Hangout Draft Proposal
           </div>
 
-          <div>
-            <label className="block text-xs font-mono font-bold text-gray-800 uppercase mb-1">
+          <div className="ideas-tab__field">
+            <label className="ideas-tab__label">
               Hangout Title (Required):
             </label>
             <input
@@ -289,27 +290,27 @@ export default function IdeasTab({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Board game night & Pizza"
-              className="w-full p-2 text-sm rounded bg-white border-2 border-[#7a7a7a]"
+              className="ideas-tab__input ideas-tab__input--title"
               maxLength={50}
               required
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-mono font-bold text-gray-800 uppercase mb-1">
+          <div className="ideas-tab__grid ideas-tab__grid--two grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="ideas-tab__field">
+              <label className="ideas-tab__label">
                 Suggested Date & Time (Optional):
               </label>
               <input
                 type="datetime-local"
                 value={datetime}
                 onChange={(e) => setDatetime(e.target.value)}
-                className="w-full p-1.5 text-xs rounded bg-white border-2 border-[#7a7a7a]"
+                className="ideas-tab__input"
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-mono font-bold text-gray-800 uppercase mb-1">
+            <div className="ideas-tab__field">
+              <label className="ideas-tab__label">
                 Place / Address (Optional):
               </label>
               <input
@@ -317,15 +318,15 @@ export default function IdeasTab({
                 value={place}
                 onChange={(e) => setPlace(e.target.value)}
                 placeholder="e.g. Daisy's living room"
-                className="w-full p-2 text-xs rounded bg-white border-2 border-[#7a7a7a]"
+                className="ideas-tab__input"
                 maxLength={100}
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-mono font-bold text-gray-800 uppercase mb-1">
+          <div className="ideas-tab__grid ideas-tab__grid--two grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="ideas-tab__field">
+              <label className="ideas-tab__label">
                 Website / Maps Link (Optional):
               </label>
               <input
@@ -333,39 +334,39 @@ export default function IdeasTab({
                 value={links}
                 onChange={(e) => setLinks(e.target.value)}
                 placeholder="https://..."
-                className="w-full p-2 text-xs rounded bg-white border-2 border-[#7a7a7a]"
+                className="ideas-tab__input"
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-mono font-bold text-gray-800 uppercase mb-1">
+            <div className="ideas-tab__field">
+              <label className="ideas-tab__label">
                 Who Proposes This:
               </label>
               <input
                 type="text"
                 value={currentUser}
-                className="w-full p-2 text-xs rounded bg-gray-100 border-2 border-[#7a7a7a] text-gray-500 font-bold font-mono"
+                className="ideas-tab__input ideas-tab__input--readonly"
                 disabled
               />
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-mono font-bold text-gray-800 uppercase mb-1">
+          <div className="ideas-tab__field">
+            <label className="ideas-tab__label">
               Organizer Notes / Description:
             </label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g. BYOB! I'll order three vegan pies. Let me know what games to bring!"
-              className="w-full p-2 text-xs rounded bg-white border-2 border-[#7a7a7a] h-20 resize-none"
+              className="ideas-tab__textarea"
               maxLength={300}
             />
           </div>
 
           <button
             type="submit"
-            className="w-full text-center p-2.5 font-pixel text-lg retro-button bg-blue-600 text-white border-blue-800 hover:bg-blue-500"
+            className="ideas-tab__submit"
           >
             📢 PIN IDEA TO BOARD
           </button>
@@ -373,13 +374,13 @@ export default function IdeasTab({
       )}
 
       {/* Filter / Sort Bar */}
-      <div className="flex items-center gap-2 bg-[#dcdcdc] p-2 rounded border border-gray-400">
+      <div className="ideas-tab__sort">
         <Filter className="w-4 h-4 text-gray-600" />
-        <span className="text-xs font-mono font-bold text-gray-700 uppercase">Sort by:</span>
-        <div className="flex gap-1.5">
+        <span className="ideas-tab__sort-label text-xs font-mono font-bold text-gray-700 uppercase">Sort by:</span>
+        <div className="ideas-tab__sort-buttons flex gap-1.5">
           <button
             onClick={() => setSortBy("newest")}
-            className={`px-3 py-1 text-xs font-bold rounded retro-button ${
+            className={`ideas-tab__sort-btn retro-button ${
               sortBy === "newest" ? "bg-teal-800 text-white border-teal-950" : "bg-white text-black"
             }`}
           >
@@ -387,7 +388,7 @@ export default function IdeasTab({
           </button>
           <button
             onClick={() => setSortBy("votes")}
-            className={`px-3 py-1 text-xs font-bold rounded retro-button ${
+            className={`ideas-tab__sort-btn retro-button ${
               sortBy === "votes" ? "bg-teal-800 text-white border-teal-950" : "bg-white text-black"
             }`}
           >
@@ -395,7 +396,7 @@ export default function IdeasTab({
           </button>
           <button
             onClick={() => setSortBy("upcoming")}
-            className={`px-3 py-1 text-xs font-bold rounded retro-button ${
+            className={`ideas-tab__sort-btn retro-button ${
               sortBy === "upcoming" ? "bg-teal-800 text-white border-teal-950" : "bg-white text-black"
             }`}
           >
@@ -405,22 +406,22 @@ export default function IdeasTab({
       </div>
 
       {/* IDEAS LISTING BOARD AS A FORUM SCROLLABLE COMPONENT */}
-      <div className="retro-bevel p-2 rounded bg-[#ececec]">
-        <div className="retro-window-title p-1.5 text-xs font-mono font-bold uppercase tracking-wider mb-2 flex items-center justify-between">
-          <span className="flex items-center gap-1.5">
+      <div className="ideas-tab__board retro-bevel p-2 rounded bg-[#ececec]">
+        <div className="ideas-tab__board-title retro-window-title p-1.5 text-xs font-mono font-bold uppercase tracking-wider mb-2 flex items-center justify-between">
+          <span className="ideas-tab__board-title-main flex items-center gap-1.5">
             <MessageCircle className="w-4 h-4" />
             Hangout Ideas Board Forum
           </span>
-          <span className="text-[10px] text-gray-200">SCROLLABLE ROW WORKSPACE</span>
+          <span className="ideas-tab__board-title-note text-[10px] text-gray-200">SCROLLABLE ROW WORKSPACE</span>
         </div>
 
         {sortedIdeas.length === 0 ? (
-          <div className="text-center py-12 bg-white border border-gray-300 rounded">
-            <p className="font-mono text-gray-500 text-xs">No hangout proposals currently active on the board.</p>
-            <p className="font-mono text-teal-800 text-xs mt-1">Click 'Propose Hangout Idea' above to get started!</p>
+          <div className="ideas-tab__board-empty text-center py-12 bg-white border border-gray-300 rounded">
+            <p className="ideas-tab__board-empty-line font-mono text-gray-500 text-xs">No hangout proposals currently active on the board.</p>
+            <p className="ideas-tab__board-empty-line ideas-tab__board-empty-line--accent font-mono text-teal-800 text-xs mt-1">Click 'Propose Hangout Idea' above to get started!</p>
           </div>
         ) : (
-          <div className="max-h-[500px] overflow-y-auto pr-1 space-y-2">
+          <div className="ideas-tab__list max-h-[500px] overflow-y-auto pr-1 space-y-2">
             {sortedIdeas.map((idea) => {
               const signupCount = idea.signups?.length || 0;
               const hasVoted = idea.votes.includes(currentUser);
@@ -429,24 +430,24 @@ export default function IdeasTab({
                 <div
                   key={idea.id}
                   onClick={() => setSelectedIdea(idea)}
-                  className="bg-white border border-gray-300 hover:border-teal-700 rounded p-3 cursor-pointer transition-all flex items-center justify-between gap-4 group hover:bg-teal-50/20 shadow-sm"
+                  className="ideas-tab__card bg-white border border-gray-300 hover:border-teal-700 rounded p-3 cursor-pointer transition-all flex items-center justify-between gap-4 group hover:bg-teal-50/20 shadow-sm"
                 >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[9px] font-mono bg-teal-100 text-teal-900 border border-teal-300 px-1 py-0.2 rounded uppercase font-bold">
+                  <div className="ideas-tab__card-main flex-1 min-w-0">
+                    <div className="ideas-tab__card-head flex items-center gap-2 mb-1">
+                      <span className="ideas-tab__id text-[9px] font-mono bg-teal-100 text-teal-900 border border-teal-300 px-1 py-0.2 rounded uppercase font-bold">
                         #{idea.id}
                       </span>
-                      <h4 className="text-sm font-bold text-gray-900 truncate group-hover:text-teal-950">
+                      <h4 className="ideas-tab__card-title text-sm font-bold text-gray-900 truncate group-hover:text-teal-950">
                         {idea.title}
                       </h4>
                     </div>
                     
                     {/* Notes preview */}
-                    <p className="text-xs text-gray-600 truncate font-mono mb-1">
+                    <p className="ideas-tab__card-notes text-xs text-gray-600 truncate font-mono mb-1">
                       {idea.notes ? idea.notes : "No description provided."}
                     </p>
 
-                    <div className="flex flex-wrap gap-2 text-[10px] font-mono text-gray-500">
+                    <div className="ideas-tab__card-meta flex flex-wrap gap-2 text-[10px] font-mono text-gray-500">
                       <span>By: <strong className="text-gray-700">{idea.suggestedBy}</strong></span>
                       {idea.datetime && (
                         <span className="text-indigo-800">| 🗓️ {idea.datetime.replace("T", " ")}</span>
@@ -458,24 +459,24 @@ export default function IdeasTab({
                   </div>
 
                   {/* Right sidecar counts & actions */}
-                  <div className="flex items-center gap-3">
+                  <div className="ideas-tab__card-side flex items-center gap-3">
                     {/* Badge signups & votes */}
-                    <div className="text-right flex flex-col items-end gap-1">
-                      <span className="text-[10px] font-mono bg-blue-100 text-blue-900 border border-blue-200 px-2 py-0.5 rounded-full font-bold">
+                    <div className="ideas-tab__badges text-right flex flex-col items-end gap-1">
+                      <span className="ideas-tab__badge ideas-tab__badge--signups text-[10px] font-mono bg-blue-100 text-blue-900 border border-blue-200 px-2 py-0.5 rounded-full font-bold">
                         {signupCount} Signups
                       </span>
-                      <span className="text-[10px] font-mono bg-teal-100 text-teal-900 border border-teal-200 px-2 py-0.5 rounded-full font-bold">
+                      <span className="ideas-tab__badge ideas-tab__badge--votes text-[10px] font-mono bg-teal-100 text-teal-900 border border-teal-200 px-2 py-0.5 rounded-full font-bold">
                         {idea.votes.length} Votes
                       </span>
                     </div>
 
-                    <div className="flex gap-1.5 flex-shrink-0">
+                    <div className="ideas-tab__card-actions flex gap-1.5 flex-shrink-0">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           handleVote(idea.id);
                         }}
-                        className={`p-1 text-xs rounded retro-button ${
+                        className={`ideas-tab__action-btn p-1 text-xs rounded retro-button ${
                           hasVoted ? "bg-rose-100 text-rose-800" : "bg-gray-100 text-black"
                         }`}
                         title="Voted I'm in!"
@@ -485,7 +486,7 @@ export default function IdeasTab({
 
                       <button
                         onClick={(e) => handleDeleteIdea(idea.id, e)}
-                        className="p-1 text-xs rounded retro-button bg-red-100 text-red-700 hover:text-red-900"
+                        className="ideas-tab__action-btn ideas-tab__action-btn--delete p-1 text-xs rounded retro-button bg-red-100 text-red-700 hover:text-red-900"
                         title="Delete Idea"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -501,70 +502,70 @@ export default function IdeasTab({
 
       {/* EXPANDED FORUM DETAIL OVERLAY MODAL */}
       {activeIdea && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="retro-bevel bg-[#c0c0c0] w-full max-w-lg p-1 shadow-2xl relative my-8">
+        <div className="ideas-tab__modal fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="ideas-tab__modal-window retro-bevel bg-[#c0c0c0] w-full max-w-lg p-1 shadow-2xl relative my-8">
             {/* Window title header */}
-            <div className="retro-window-title flex items-center justify-between p-1.5 px-3 select-none">
-              <span className="font-mono font-bold text-xs text-white uppercase tracking-wider flex items-center gap-1.5">
+            <div className="ideas-tab__modal-title retro-window-title flex items-center justify-between p-1.5 px-3 select-none">
+              <span className="ideas-tab__modal-title-text font-mono font-bold text-xs text-white uppercase tracking-wider flex items-center gap-1.5">
                 <MessageCircle className="w-4 h-4 text-yellow-300" />
                 Idea Discussion: #{activeIdea.id}
               </span>
               <button
                 onClick={() => setSelectedIdea(null)}
-                className="px-1.5 py-0.5 bg-[#c0c0c0] border border-white text-black font-mono font-bold text-xs hover:bg-[#b0b0b0]"
+                className="ideas-tab__modal-close px-1.5 py-0.5 bg-[#c0c0c0] border border-white text-black font-mono font-bold text-xs hover:bg-[#b0b0b0]"
               >
                 X
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="p-4 space-y-4 text-gray-900 max-h-[80vh] overflow-y-auto">
-              <div>
-                <h3 className="text-xl font-pixel font-bold text-teal-950 uppercase tracking-wide">
+            <div className="ideas-tab__modal-body p-4 space-y-4 text-gray-900 max-h-[80vh] overflow-y-auto">
+              <div className="ideas-tab__modal-head">
+                <h3 className="ideas-tab__modal-idea-title text-xl font-pixel font-bold text-teal-950 uppercase tracking-wide">
                   {activeIdea.title}
                 </h3>
-                <p className="text-xs text-gray-600 font-mono mt-0.5">
+                <p className="ideas-tab__modal-idea-byline text-xs text-gray-600 font-mono mt-0.5">
                   Proposed by <span className="font-bold text-gray-900">{activeIdea.suggestedBy}</span>
                 </p>
               </div>
 
               {/* Description box */}
-              <div className="p-3 bg-white border border-gray-300 rounded font-mono text-xs text-gray-800 leading-relaxed max-h-32 overflow-y-auto">
-                <strong className="block text-gray-500 uppercase text-[9px] mb-1">Description / Notes:</strong>
+              <div className="ideas-tab__desc p-3 bg-white border border-gray-300 rounded font-mono text-xs text-gray-800 leading-relaxed max-h-32 overflow-y-auto">
+                <strong className="ideas-tab__desc-label block text-gray-500 uppercase text-[9px] mb-1">Description / Notes:</strong>
                 {activeIdea.notes || "No additional description provided."}
               </div>
 
               {/* Proposal details display */}
-              <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                <div className="p-2 bg-white/60 border border-gray-300 rounded">
-                  <span className="text-[10px] text-gray-500 block uppercase font-bold">Suggested Date:</span>
-                  <span className="font-bold text-gray-800">{activeIdea.datetime ? activeIdea.datetime.replace("T", " ") : "TBD"}</span>
+              <div className="ideas-tab__details-grid grid grid-cols-2 gap-2 text-xs font-mono">
+                <div className="ideas-tab__detail-box p-2 bg-white/60 border border-gray-300 rounded">
+                  <span className="ideas-tab__detail-label text-[10px] text-gray-500 block uppercase font-bold">Suggested Date:</span>
+                  <span className="ideas-tab__detail-value font-bold text-gray-800">{activeIdea.datetime ? activeIdea.datetime.replace("T", " ") : "TBD"}</span>
                 </div>
-                <div className="p-2 bg-white/60 border border-gray-300 rounded">
-                  <span className="text-[10px] text-gray-500 block uppercase font-bold">Suggested Place:</span>
-                  <span className="font-bold text-gray-800">{activeIdea.place || "TBD"}</span>
+                <div className="ideas-tab__detail-box p-2 bg-white/60 border border-gray-300 rounded">
+                  <span className="ideas-tab__detail-label text-[10px] text-gray-500 block uppercase font-bold">Suggested Place:</span>
+                  <span className="ideas-tab__detail-value font-bold text-gray-800">{activeIdea.place || "TBD"}</span>
                 </div>
               </div>
 
               {/* Support Votes & RSVP sign-ups */}
-              <div className="border-t border-gray-300 pt-3">
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-mono font-bold text-gray-800 uppercase flex items-center gap-1">
+              <div className="ideas-tab__rsvp border-t border-gray-300 pt-3">
+                <div className="ideas-tab__rsvp-head flex items-center justify-between mb-1.5">
+                  <span className="ideas-tab__rsvp-title text-xs font-mono font-bold text-gray-800 uppercase flex items-center gap-1">
                     👥 Signed-up Members ({activeIdea.signups?.length || 0}):
                   </span>
-                  <span className="text-[10px] font-mono text-gray-500">{activeIdea.votes?.length || 0} Votes</span>
+                  <span className="ideas-tab__rsvp-votes text-[10px] font-mono text-gray-500">{activeIdea.votes?.length || 0} Votes</span>
                 </div>
                 
-                <div className="flex flex-wrap gap-1.5 p-2 bg-white border border-gray-300 rounded min-h-[40px] items-center">
+                <div className="ideas-tab__signup-list flex flex-wrap gap-1.5 p-2 bg-white border border-gray-300 rounded min-h-[40px] items-center">
                   {(!activeIdea.signups || activeIdea.signups.length === 0) ? (
-                    <span className="text-[10px] text-gray-500 font-mono italic">No one signed up yet. Join the crew!</span>
+                    <span className="ideas-tab__signup-empty text-[10px] text-gray-500 font-mono italic">No one signed up yet. Join the crew!</span>
                   ) : (
                     activeIdea.signups.map((name) => {
                       const color = group.members.find(m => m.name === name)?.color || '#333';
                       return (
                         <span
                           key={name}
-                          className="px-2 py-0.5 text-xs rounded font-bold text-white flex items-center gap-1 border border-black/10"
+                          className="ideas-tab__signup-chip px-2 py-0.5 text-xs rounded font-bold text-white flex items-center gap-1 border border-black/10"
                           style={{ backgroundColor: color }}
                         >
                           {name}
@@ -574,10 +575,10 @@ export default function IdeasTab({
                   )}
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 mt-2">
+                <div className="ideas-tab__rsvp-actions grid grid-cols-2 gap-2 mt-2">
                   <button
                     onClick={() => handleSignup(activeIdea.id)}
-                    className={`p-2 text-xs font-pixel rounded retro-button flex items-center justify-center gap-1 ${(activeIdea.signups || []).includes(currentUser) ? "bg-rose-600 text-white border-rose-800 hover:bg-rose-500" : "bg-blue-600 text-white border-blue-800 hover:bg-blue-500"}`}
+                    className={`ideas-tab__rsvp-btn p-2 text-xs font-pixel rounded retro-button flex items-center justify-center gap-1 ${(activeIdea.signups || []).includes(currentUser) ? "bg-rose-600 text-white border-rose-800 hover:bg-rose-500" : "bg-blue-600 text-white border-blue-800 hover:bg-blue-500"}`}
                   >
                     <CheckCircle className="w-4 h-4" />
                     {(activeIdea.signups || []).includes(currentUser) ? "CANCEL RSVP" : "SIGN UP!"}
@@ -585,7 +586,7 @@ export default function IdeasTab({
 
                   <button
                     onClick={() => handleVote(activeIdea.id)}
-                    className={`p-2 text-xs font-pixel rounded retro-button flex items-center justify-center gap-1 ${activeIdea.votes.includes(currentUser) ? "bg-teal-800 text-white border-teal-950" : "bg-white text-black"}`}
+                    className={`ideas-tab__rsvp-btn p-2 text-xs font-pixel rounded retro-button flex items-center justify-center gap-1 ${activeIdea.votes.includes(currentUser) ? "bg-teal-800 text-white border-teal-950" : "bg-white text-black"}`}
                   >
                     <ThumbsUp className="w-4 h-4" />
                     {activeIdea.votes.includes(currentUser) ? "SUPPORTED" : "VOTE UP"}
@@ -594,18 +595,18 @@ export default function IdeasTab({
               </div>
 
               {/* Upload Resource or Photo Form Section */}
-              <div className="border-t border-gray-300 pt-3">
-                <span className="block text-xs font-mono font-bold text-gray-800 uppercase mb-2 flex items-center gap-1">
+              <div className="ideas-tab__resources border-t border-gray-300 pt-3">
+                <span className="ideas-tab__resources-title block text-xs font-mono font-bold text-gray-800 uppercase mb-2 flex items-center gap-1">
                   <Paperclip className="w-3.5 h-3.5 text-teal-800" />
                   Shared Resources (Links & Photos)
                 </span>
 
-                <div className="bg-white border border-gray-300 p-2 rounded space-y-2 mb-3">
-                  <div className="flex gap-2">
+                <div className="ideas-tab__resources-box bg-white border border-gray-300 p-2 rounded space-y-2 mb-3">
+                  <div className="ideas-tab__upload-tabs flex gap-2">
                     <button
                       type="button"
                       onClick={() => setUploadType('link')}
-                      className={`flex-1 p-1 text-[10px] font-bold rounded retro-button ${
+                      className={`ideas-tab__upload-tab flex-1 p-1 text-[10px] font-bold rounded retro-button ${
                         uploadType === 'link' ? 'bg-teal-800 text-white border-teal-950' : 'bg-gray-100 text-black'
                       }`}
                     >
@@ -614,7 +615,7 @@ export default function IdeasTab({
                     <button
                       type="button"
                       onClick={() => setUploadType('photo')}
-                      className={`flex-1 p-1 text-[10px] font-bold rounded retro-button ${
+                      className={`ideas-tab__upload-tab flex-1 p-1 text-[10px] font-bold rounded retro-button ${
                         uploadType === 'photo' ? 'bg-teal-800 text-white border-teal-950' : 'bg-gray-100 text-black'
                       }`}
                     >
@@ -623,20 +624,20 @@ export default function IdeasTab({
                   </div>
 
                   {uploadType === 'link' ? (
-                    <div className="flex gap-1.5">
+                    <div className="ideas-tab__upload-row flex gap-1.5">
                       <input
                         type="text"
                         placeholder="Link Title (e.g. Menu)"
                         value={linkName}
                         onChange={(e) => setLinkName(e.target.value)}
-                        className="flex-1 p-1 px-2 text-xs border border-gray-300 rounded bg-white font-mono"
+                        className="ideas-tab__upload-input flex-1 p-1 px-2 text-xs border border-gray-300 rounded bg-white font-mono"
                       />
                       <input
                         type="url"
                         placeholder="https://..."
                         value={linkUrl}
                         onChange={(e) => setLinkUrl(e.target.value)}
-                        className="flex-1 p-1 px-2 text-xs border border-gray-300 rounded bg-white font-mono"
+                        className="ideas-tab__upload-input flex-1 p-1 px-2 text-xs border border-gray-300 rounded bg-white font-mono"
                       />
                       <button
                         type="button"
@@ -646,19 +647,19 @@ export default function IdeasTab({
                           setLinkName("");
                           setLinkUrl("");
                         }}
-                        className="px-2 py-1 bg-teal-800 text-white text-xs font-bold rounded retro-button"
+                        className="ideas-tab__upload-add px-2 py-1 bg-teal-800 text-white text-xs font-bold rounded retro-button"
                       >
                         Add
                       </button>
                     </div>
                   ) : (
-                    <div className="space-y-1.5 font-mono">
+                    <div className="ideas-tab__upload-photo space-y-1.5 font-mono">
                       <input
                         type="text"
                         placeholder="Caption/Label (Optional)"
                         value={photoName}
                         onChange={(e) => setPhotoName(e.target.value)}
-                        className="w-full p-1 px-2 text-xs border border-gray-300 rounded bg-white"
+                        className="ideas-tab__upload-input w-full p-1 px-2 text-xs border border-gray-300 rounded bg-white"
                       />
                       <input
                         type="file"
@@ -679,50 +680,50 @@ export default function IdeasTab({
                             reader.readAsDataURL(file);
                           }
                         }}
-                        className="w-full text-xs"
+                        className="ideas-tab__upload-file w-full text-xs"
                       />
-                      <p className="text-[9px] text-gray-500">Max size: 500KB. Standalone image upload store.</p>
+                      <p className="ideas-tab__upload-help text-[9px] text-gray-500">Max size: 500KB. Standalone image upload store.</p>
                     </div>
                   )}
                 </div>
 
                 {/* Attachments rendering lists */}
-                <div className="max-h-40 overflow-y-auto space-y-1.5 pr-1">
+                <div className="ideas-tab__attachments max-h-40 overflow-y-auto space-y-1.5 pr-1">
                   {(!activeIdea.attachments || activeIdea.attachments.length === 0) ? (
-                    <p className="text-[10px] text-gray-500 font-mono italic text-center py-2 bg-white/30 rounded border border-dashed border-gray-300">No photos or web resources uploaded yet.</p>
+                    <p className="ideas-tab__attachments-empty text-[10px] text-gray-500 font-mono italic text-center py-2 bg-white/30 rounded border border-dashed border-gray-300">No photos or web resources uploaded yet.</p>
                   ) : (
                     activeIdea.attachments.map((att) => (
-                      <div key={att.id} className="p-2 bg-white border border-gray-200 rounded flex items-center justify-between gap-3 text-xs font-mono shadow-sm">
-                        <div className="flex-1 min-w-0">
-                          <span className="font-bold text-gray-900 block truncate flex items-center gap-1">
+                      <div key={att.id} className="ideas-tab__attachment p-2 bg-white border border-gray-200 rounded flex items-center justify-between gap-3 text-xs font-mono shadow-sm">
+                        <div className="ideas-tab__attachment-main flex-1 min-w-0">
+                          <span className="ideas-tab__attachment-name font-bold text-gray-900 block truncate flex items-center gap-1">
                             {att.type === 'link' ? <Link className="w-3.5 h-3.5 text-blue-700" /> : <Image className="w-3.5 h-3.5 text-emerald-700" />}
                             {att.name}
                           </span>
-                          <span className="text-[9px] text-gray-500 block">Shared by {att.addedBy}</span>
+                          <span className="ideas-tab__attachment-by text-[9px] text-gray-500 block">Shared by {att.addedBy}</span>
                         </div>
-                        <div className="flex-shrink-0">
+                        <div className="ideas-tab__attachment-actions flex-shrink-0">
                           {att.type === 'link' ? (
                             <a
                               href={att.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 text-[10px] font-bold rounded flex items-center gap-0.5 border border-indigo-200"
+                              className="ideas-tab__attachment-link px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 text-[10px] font-bold rounded flex items-center gap-0.5 border border-indigo-200"
                             >
                               <ExternalLink className="w-3 h-3" />
                               Open Link
                             </a>
                           ) : (
-                            <div className="flex flex-col items-center gap-1">
+                            <div className="ideas-tab__attachment-image-wrap flex flex-col items-center gap-1">
                               <a
                                 href={att.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block border border-gray-300 rounded overflow-hidden"
+                                className="ideas-tab__attachment-image-link block border border-gray-300 rounded overflow-hidden"
                               >
                                 <img
                                   src={att.url}
                                   alt={att.name}
-                                  className="w-12 h-12 object-cover hover:opacity-80 transition-all"
+                                  className="ideas-tab__attachment-image w-12 h-12 object-cover hover:opacity-80 transition-all"
                                 />
                               </a>
                             </div>
@@ -735,29 +736,29 @@ export default function IdeasTab({
               </div>
 
               {/* Convert to Confirmed Event Section */}
-              <div className="mt-4 border-t-2 border-dashed border-gray-400 pt-3">
-                <span className="block text-xs font-mono font-bold text-gray-800 uppercase mb-2 flex items-center gap-1">
+              <div className="ideas-tab__promote mt-4 border-t-2 border-dashed border-gray-400 pt-3">
+                <span className="ideas-tab__promote-title block text-xs font-mono font-bold text-gray-800 uppercase mb-2 flex items-center gap-1">
                   <Calendar className="w-4 h-4 text-yellow-700" />
                   📅 Convert to Confirmed Master Event
                 </span>
-                <div className="grid grid-cols-2 gap-2 mb-3 font-mono">
-                  <div>
-                    <label className="block text-[10px] text-gray-700 uppercase mb-0.5 font-bold">Confirmed Date/Time:</label>
+                <div className="ideas-tab__promote-grid grid grid-cols-2 gap-2 mb-3 font-mono">
+                  <div className="ideas-tab__field">
+                    <label className="ideas-tab__promote-label block text-[10px] text-gray-700 uppercase mb-0.5 font-bold">Confirmed Date/Time:</label>
                     <input
                       type="datetime-local"
                       value={promoteDateTime}
                       onChange={(e) => setPromoteDateTime(e.target.value)}
-                      className="w-full p-1 px-2 text-xs bg-white border border-gray-300 rounded"
+                      className="ideas-tab__promote-input w-full p-1 px-2 text-xs bg-white border border-gray-300 rounded"
                     />
                   </div>
-                  <div>
-                    <label className="block text-[10px] text-gray-700 uppercase mb-0.5 font-bold">Confirmed Place:</label>
+                  <div className="ideas-tab__field">
+                    <label className="ideas-tab__promote-label block text-[10px] text-gray-700 uppercase mb-0.5 font-bold">Confirmed Place:</label>
                     <input
                       type="text"
                       value={promotePlace}
                       onChange={(e) => setPromotePlace(e.target.value)}
                       placeholder="e.g. Daisy's backyard"
-                      className="w-full p-1 px-2 text-xs bg-white border border-gray-300 rounded"
+                      className="ideas-tab__promote-input w-full p-1 px-2 text-xs bg-white border border-gray-300 rounded"
                     />
                   </div>
                 </div>
@@ -776,7 +777,7 @@ export default function IdeasTab({
                     handlePromoteToEvent(updatedIdeaForPromo);
                     setSelectedIdea(null);
                   }}
-                  className="w-full p-2.5 text-xs font-pixel bg-blue-600 border-blue-800 hover:bg-blue-500 text-white font-bold flex items-center justify-center gap-1.5 shadow"
+                  className="ideas-tab__promote-btn w-full p-2.5 text-xs font-pixel bg-blue-600 border-blue-800 hover:bg-blue-500 text-white font-bold flex items-center justify-center gap-1.5 shadow"
                 >
                   <ArrowRight className="w-4 h-4" />
                   PROMOTE TO CONFIRMED EVENT
@@ -785,20 +786,20 @@ export default function IdeasTab({
             </div>
 
             {/* Modal footer back to list */}
-            <div className="p-2 border-t border-gray-300 bg-gray-100 flex justify-between items-center">
+            <div className="ideas-tab__modal-footer p-2 border-t border-gray-300 bg-gray-100 flex justify-between items-center">
               <button
                 onClick={(e) => {
                   handleDeleteIdea(activeIdea.id, e);
                   setSelectedIdea(null);
                 }}
-                className="px-4 py-1.5 bg-red-100 hover:bg-red-200 border-2 border-red-400 text-red-800 font-bold text-xs retro-button flex items-center gap-1"
+                className="ideas-tab__modal-delete px-4 py-1.5 bg-red-100 hover:bg-red-200 border-2 border-red-400 text-red-800 font-bold text-xs retro-button flex items-center gap-1"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 Delete Proposal
               </button>
               <button
                 onClick={() => setSelectedIdea(null)}
-                className="px-4 py-1.5 bg-white border-2 border-[#7a7a7a] text-black font-bold text-xs retro-button"
+                className="ideas-tab__modal-close-btn px-4 py-1.5 bg-white border-2 border-[#7a7a7a] text-black font-bold text-xs retro-button"
               >
                 Close Forum
               </button>

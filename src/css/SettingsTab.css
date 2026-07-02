@@ -1,0 +1,111 @@
+.settings-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.settings-tab__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.settings-tab__layout {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.settings-tab__sync-panel,
+.settings-tab__invite,
+.settings-tab__profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-tab__window-title {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.settings-tab__manual-sheet-note {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.settings-tab__csv-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.settings-tab__status,
+.settings-tab__error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+}
+
+.settings-tab__autosync-active,
+.settings-tab__autosync-inactive {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.settings-tab__autosync-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.settings-tab__disconnect {
+  margin-left: auto;
+}
+
+.settings-tab__manual-connect-row,
+.settings-tab__copy-row {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.settings-tab__manual-connect-input,
+.settings-tab__code-input,
+.settings-tab__link-input,
+.settings-tab__readonly-input,
+.settings-tab__timezone-select {
+  min-width: 0;
+}
+
+.settings-tab__code-input {
+  letter-spacing: 0.08em;
+}
+
+.settings-tab__copy-btn {
+  flex-shrink: 0;
+}
+
+.settings-tab__profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.settings-tab__color-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.settings-tab__color-swatch {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+@media (max-width: 767px) {
+  .settings-tab__profile-grid {
+    grid-template-columns: 1fr;
+  }
+}

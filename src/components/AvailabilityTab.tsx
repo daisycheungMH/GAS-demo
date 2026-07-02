@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Group, Member, AvailabilityBlock, AvailabilityStatus } from "../types";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
@@ -25,6 +25,34 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
   const [activeBrush, setActiveBrush] = useState<AvailabilityStatus>("available");
   const [isPainting, setIsPainting] = useState(false);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">("idle");
+  const [draftAvailability, setDraftAvailability] = useState<AvailabilityBlock[]>(group.availability);
+  const paintBrushRef = useRef<AvailabilityStatus>(activeBrush);
+  const dragBrushRef = useRef<AvailabilityStatus | null>(null);
+
+  useEffect(() => {
+    setDraftAvailability(group.availability);
+  }, [group.availability]);
+
+  useEffect(() => {
+    paintBrushRef.current = activeBrush;
+  }, [activeBrush]);
+
+  useEffect(() => {
+    const handleGlobalPointerRelease = () => {
+      setIsPainting(false);
+      dragBrushRef.current = null;
+    };
+
+    window.addEventListener("mouseup", handleGlobalPointerRelease);
+    window.addEventListener("contextmenu", handleGlobalPointerRelease);
+    window.addEventListener("blur", handleGlobalPointerRelease);
+
+    return () => {
+      window.removeEventListener("mouseup", handleGlobalPointerRelease);
+      window.removeEventListener("contextmenu", handleGlobalPointerRelease);
+      window.removeEventListener("blur", handleGlobalPointerRelease);
+    };
+  }, []);
 
   // Get date for specific week offset
   const getWeekDateRangeStr = (offset: number) => {
@@ -48,7 +76,7 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
   };
 
   // Extract current user's block mappings
-  const userBlocks = group.availability.filter((b) => b.member === currentUser) || [];
+  const userBlocks = draftAvailability.filter((b) => b.member === currentUser) || [];
 
   // Helper to check status of a cell
   const getCellStatus = (day: string, hour: string): AvailabilityStatus => {
@@ -65,11 +93,11 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
   };
 
   // Handle painting cells
-  const handleCellPaint = (day: string, hour: string) => {
+  const handleCellPaint = (day: string, hour: string, brush: AvailabilityStatus = activeBrush) => {
     const currentStatus = getCellStatus(day, hour);
-    if (currentStatus === activeBrush) return; // Already painted
+    if (currentStatus === brush) return; // Already painted
 
-    let updatedBlocks = [...group.availability];
+    let updatedBlocks = [...draftAvailability];
 
     // Determine target date label
     const targetDateLabel = selectedMode === "recurring" 
@@ -86,13 +114,13 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
     );
 
     // Add new painted block (if not clearing/unavailable)
-    if (activeBrush !== "unavailable") {
+    if (brush !== "unavailable") {
       updatedBlocks.push({
         member: currentUser,
         date: targetDateLabel,
         start: hour,
         end: endHour,
-        status: activeBrush,
+        status: brush,
         isRecurring: selectedMode === "recurring"
       });
     }
@@ -100,19 +128,21 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
     saveBlocksToFirestore(updatedBlocks);
   };
 
-  const handleMouseDown = (day: string, hour: string) => {
+  const handleMouseDown = (day: string, hour: string, brush: AvailabilityStatus) => {
     setIsPainting(true);
-    handleCellPaint(day, hour);
+    dragBrushRef.current = brush;
+    handleCellPaint(day, hour, brush);
   };
 
   const handleMouseEnter = (day: string, hour: string) => {
-    if (isPainting) {
-      handleCellPaint(day, hour);
+    if (isPainting && dragBrushRef.current) {
+      handleCellPaint(day, hour, dragBrushRef.current);
     }
   };
 
   const handleMouseUp = () => {
     setIsPainting(false);
+    dragBrushRef.current = null;
   };
 
   // Quick patterns templates
@@ -183,11 +213,11 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
     if (window.confirm("Are you sure you want to completely clear your schedule for this view?")) {
       let newBlocks: AvailabilityBlock[] = [];
       if (selectedMode === "recurring") {
-        newBlocks = group.availability.filter((b) => !(b.member === currentUser && b.isRecurring));
+        newBlocks = draftAvailability.filter((b) => !(b.member === currentUser && b.isRecurring));
       } else {
         const startOfWeek = getSpecificDateForDay(0, selectedWeekOffset);
         const endOfWeek = getSpecificDateForDay(6, selectedWeekOffset);
-        newBlocks = group.availability.filter((b) => {
+        newBlocks = draftAvailability.filter((b) => {
           if (b.member === currentUser && !b.isRecurring) {
             return b.date < startOfWeek || b.date > endOfWeek;
           }
@@ -199,6 +229,7 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
   };
 
   const saveBlocksToFirestore = async (newAvailability: AvailabilityBlock[]) => {
+      setDraftAvailability(newAvailability);
     setSaveStatus("saving");
     try {
       const docRef = doc(db, "groups", group.groupId);
@@ -214,6 +245,12 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
       console.error(e);
       setSaveStatus("idle");
     }
+  };
+
+  const handleCellContextMenu = (day: string, hour: string) => {
+    dragBrushRef.current = "unavailable";
+    setIsPainting(true);
+    handleCellPaint(day, hour, "unavailable");
   };
 
   return (
@@ -435,8 +472,19 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
                 return (
                   <div
                     key={`${day}-${hour}`}
-                    onMouseDown={() => handleMouseDown(day, hour)}
+                    onMouseDown={(event) => {
+                      event.preventDefault();
+                      if (event.button === 2) {
+                        handleMouseDown(day, hour, "unavailable");
+                      } else {
+                        handleMouseDown(day, hour, paintBrushRef.current);
+                      }
+                    }}
                     onMouseEnter={() => handleMouseEnter(day, hour)}
+                    onContextMenu={(event) => {
+                      event.preventDefault();
+                      handleCellContextMenu(day, hour);
+                    }}
                     className={`availability-tab__cell h-10 transition-all cursor-pointer border-r border-b relative group ${bgClass}`}
                     title={`${day} @ ${hour} - ${status === 'available' ? 'Available' : status === 'maybe' ? 'Maybe' : 'Busy'}`}
                   >

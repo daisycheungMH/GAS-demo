@@ -107,6 +107,8 @@
   line-height: 0.875rem;
   text-align: center;
   color: var(--color-text-tertiary);
+  border: 1px solid var(--color-amber-200);
+  background: var(--color-yellow-50);
 }
 
 .availability-tab__mode-note {
@@ -114,7 +116,7 @@
   padding: 0.375rem;
   border: 1px solid var(--color-amber-200);
   border-radius: 0.25rem;
-  background: var(--color-white)beb;
+  background: var(--color-yellow-50);
   font-family: var(--font-mono);
   font-size: 0.625rem;
   line-height: 1.2;

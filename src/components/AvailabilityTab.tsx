@@ -150,28 +150,24 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
     const confirmClear = window.confirm("This will overwrite your availability slots for this grid. Continue?");
     if (!confirmClear) return;
 
-    let newBlocks: AvailabilityBlock[] = [];
-    if (selectedMode === "recurring") {
-      newBlocks = group.availability.filter((b) => !(b.member === currentUser && b.isRecurring));
-    } else {
-      const startOfWeek = getSpecificDateForDay(0, selectedWeekOffset);
-      const endOfWeek = getSpecificDateForDay(6, selectedWeekOffset);
-      newBlocks = group.availability.filter((b) => {
-        if (b.member === currentUser && !b.isRecurring) {
-          return b.date < startOfWeek || b.date > endOfWeek;
-        }
-        return true;
-      });
-    }
+    let newBlocks: AvailabilityBlock[] = [...draftAvailability];
 
-    const addBlock = (day: string, startH: string, endH: string, status: AvailabilityStatus) => {
-      const targetDate = selectedMode === "recurring" 
-        ? day 
+    const replaceBlocksForRange = (day: string, startH: string, endH: string) => {
+      const targetDate = selectedMode === "recurring"
+        ? day
         : getSpecificDateForDay(DAYS_OF_WEEK.indexOf(day), selectedWeekOffset);
 
-      // We split range into 1-hour blocks matching our cell structure
       const startNum = parseInt(startH.split(":")[0]);
       const endNum = parseInt(endH.split(":")[0]);
+
+      newBlocks = newBlocks.filter((block) => {
+        if (block.member !== currentUser) return true;
+        if (block.isRecurring !== (selectedMode === "recurring")) return true;
+        if (block.date !== targetDate) return true;
+
+        const blockHour = parseInt(block.start.split(":")[0]);
+        return blockHour < startNum || blockHour >= endNum;
+      });
 
       for (let h = startNum; h < endNum; h++) {
         if (h >= 8 && h < 23) {
@@ -182,7 +178,7 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
             date: targetDate,
             start: hourStr,
             end: nextHourStr,
-            status,
+            status: "available",
             isRecurring: selectedMode === "recurring"
           });
         }
@@ -192,17 +188,17 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
     if (pattern === "evenings") {
       // Mon-Fri 18:00 - 22:00
       DAYS_OF_WEEK.slice(0, 5).forEach((day) => {
-        addBlock(day, "18:00", "22:00", "available");
+        replaceBlocksForRange(day, "18:00", "22:00");
       });
     } else if (pattern === "weekends") {
       // Sat-Sun 10:00 - 22:00
       DAYS_OF_WEEK.slice(5, 7).forEach((day) => {
-        addBlock(day, "10:00", "22:00", "available");
+        replaceBlocksForRange(day, "10:00", "22:00");
       });
     } else if (pattern === "after6") {
       // Mon-Sun 18:00 - 23:00
       DAYS_OF_WEEK.forEach((day) => {
-        addBlock(day, "18:00", "23:00", "available");
+        replaceBlocksForRange(day, "18:00", "23:00");
       });
     }
 
@@ -385,6 +381,9 @@ export default function AvailabilityTab({ group, currentUser, onSyncNeeded }: Av
               <span className="w-3.5 h-3.5 rounded bg-gray-300 border border-gray-400"></span>
               Busy / Eraser (Gray)
             </button>
+            <p className="availability-tab__mode-note">
+              You can right-click on a cell to quickly erase it without changing your brush.
+            </p>
           </div>
         </div>
 

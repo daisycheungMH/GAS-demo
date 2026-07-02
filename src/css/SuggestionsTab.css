@@ -1,0 +1,90 @@
+.suggestions-tab__panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.suggestions-tab__tiny-btn {
+  line-height: 1.1;
+}
+
+.suggestions-tab__member-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  text-align: left;
+  font-weight: 500;
+  border: 1px solid var(--color-border-light);
+  transition: all 0.2s;
+  font-family: var(--font-mono);
+}
+
+.suggestions-tab__member-item--active {
+  background-color: var(--color-teal-400);
+  border-color: var(--color-focus-ring);
+  color: var(--color-teal-960);
+  box-shadow: inset 0 2px 4px var(--color-black-alpha-20);
+  font-weight: 700;
+}
+
+.suggestions-tab__member-color {
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-black-alpha-20);
+}
+
+.suggestions-tab__mode-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem;
+}
+
+.suggestions-tab__mode-btn {
+  justify-content: center;
+}
+
+.suggestions-tab__week-label {
+  text-align: center;
+}
+
+.suggestions-tab__results-empty {
+  align-items: flex-start;
+}
+
+.suggestions-tab__suggestion-card {
+  position: relative;
+}
+
+.suggestions-tab__rank {
+  white-space: nowrap;
+}
+
+.suggestions-tab__suggestion-main {
+  padding-right: 3rem;
+}
+
+.suggestions-tab__suggestion-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.suggestions-tab__propose {
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .suggestions-tab__suggestion-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

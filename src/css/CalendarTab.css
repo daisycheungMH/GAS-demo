@@ -1,0 +1,170 @@
+.calendar-tab__events-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.calendar-tab__events-title {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.calendar-tab__events-empty {
+  text-align: center;
+}
+
+.calendar-tab__events-list {
+  max-height: 25rem;
+}
+
+.calendar-tab__event-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.calendar-tab__event-title {
+  max-width: 12.5rem;
+}
+
+.calendar-tab__event-time {
+  margin-top: 0.125rem;
+}
+
+.calendar-tab__going-pill {
+  white-space: nowrap;
+}
+
+.calendar-tab__details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.calendar-tab__details-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.calendar-tab__details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.calendar-tab__confirmed-badge {
+  white-space: nowrap;
+}
+
+.calendar-tab__datetime {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.calendar-tab__datetime-date,
+.calendar-tab__datetime-time-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-tab__location-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.calendar-tab__location,
+.calendar-tab__event-link,
+.calendar-tab__event-link-disabled {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-tab__location-text {
+  min-width: 0;
+}
+
+.calendar-tab__notes-copy {
+  line-height: 1.5;
+}
+
+.calendar-tab__rsvps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.calendar-tab__rsvp-status {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.calendar-tab__rsvp-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.calendar-tab__member-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-tab__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.calendar-tab__actions-label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.calendar-tab__actions-buttons {
+  display: flex;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+}
+
+.calendar-tab__rsvp-button {
+  white-space: nowrap;
+}
+
+.calendar-tab__details-empty {
+  min-height: 100%;
+}
+
+@media (min-width: 768px) {
+  .calendar-tab__layout {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .calendar-tab__events-panel {
+    grid-column: span 5 / span 5;
+  }
+
+  .calendar-tab__details-wrap {
+    grid-column: span 7 / span 7;
+  }
+
+  .calendar-tab__location-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calendar-tab__actions {
+    flex-direction: row;
+    align-items: center;
+  }
+}

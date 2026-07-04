@@ -19,7 +19,21 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  setup-secrets:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create service account file from secret
+      shell: bash
+      env:
+        CREDENTIALS_JSON_CONTENT: ${{ secrets.CREDENTIALS_JSON_CONTENT }}
+      run: |
+        if [ -z "$CREDENTIALS_JSON_CONTENT" ]; then
+          echo "CREDENTIALS_JSON_CONTENT is not set"
+          exit 1
+        fi
+        printf '%s' "$CREDENTIALS_JSON_CONTENT" > credentials.json
   deploy:
+    needs: setup-secrets
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

@@ -172,7 +172,7 @@ async function initializeSheetHeaders(spreadsheetId: string) {
       },
       {
         title: 'Availability',
-        headers: ['UUID', 'member', 'date', 'statusCode'],
+        headers: ['UUID', 'member', 'date', 'maybeStatusCode', 'availableStatusCode'],
       },
       {
         title: 'Ideas',
@@ -432,7 +432,8 @@ async function getSheetData(groupCode: string): Promise<GroupData | null> {
       UUID: String(row[0] ?? ''),
       member: String(row[1] ?? ''),
       date: String(row[2] ?? ''),
-      statusCode: String(row[3] ?? ''),
+      maybeStatusCode: String(row[3] ?? ''),
+      availableStatusCode: String(row[4] ?? ''),
     })).filter((row: any) => row.UUID || row.member || row.date);
 
     const ideas = ideaRows.slice(1).map((row: any[]) => ({
@@ -493,9 +494,9 @@ async function putSheetData(groupCode: string, data: SheetData) {
     return;
   }
 
-  if ('member' in data && 'date' in data && 'statusCode' in data) {
+  if ('member' in data && 'date' in data && 'maybeStatusCode' in data && 'availableStatusCode' in data) {
     const availability = data as SheetAvailability;
-    await appendRow(spreadsheetId, 'Availability', [availability.UUID, availability.member, availability.date, availability.statusCode]);
+    await appendRow(spreadsheetId, 'Availability', [availability.UUID, availability.member, availability.date, availability.maybeStatusCode, availability.availableStatusCode]);
     return;
   }
 

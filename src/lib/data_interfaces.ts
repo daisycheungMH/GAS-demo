@@ -10,8 +10,9 @@ export interface SheetMembers extends SheetData {
 
 export interface SheetAvailability extends SheetData {
   member: string;
-  date: string; // YYYY-MM-DD | Monday of the week | assuming GMT+8
-  statusCode: string; // interger -> hex color code 0xFFFFFF (available-maybe)
+  date: string; // YYYY-MM-DD 
+  maybeStatusCode: string; // interger -> hex color code 0xFFFFFF
+  availableStatusCode: string; // interger -> hex color code 0xFFFFFF
 }
 
 export interface SheetIdea extends SheetData {

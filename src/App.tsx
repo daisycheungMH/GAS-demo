@@ -27,6 +27,7 @@ import {
   Bell,
   RefreshCw,
 } from "lucide-react";
+import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 
 export default function App() {
   const [groupId, setGroupId] = useState<string | null>(null);

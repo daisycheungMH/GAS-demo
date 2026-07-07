@@ -3,7 +3,7 @@ import { COMMON_TIMEZONES, getLocalTimezone } from "../lib/timezone";
 import { PRESET_COLORS } from "../types";
 import { Calendar, Lock, AlertCircle } from "lucide-react";
 import "../css/Landing.css";
-import { getAllCodes, getAllMembers, putSheetData, createGroupSpreadsheet } from "../lib/sheets_basics";
+import { getAllCodes, getAllMembers, putSheetData, createGroupSpreadsheet } from "../lib/sheets";
 import { SheetMember } from "../lib/data_interfaces";
 
 interface LandingProps {

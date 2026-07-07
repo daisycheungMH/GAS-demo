@@ -1,4 +1,4 @@
-import { GroupData, SheetAvailability, SheetData, SheetMembers } from "./data_interfaces";
+import { GroupData, SheetAvailability, SheetData, SheetEvent, SheetIdea, SheetMember } from "./data_interfaces";
 
 const { google } = require('googleapis');
 const path = require('path');
@@ -317,6 +317,9 @@ async function createGroupSpreadsheet(groupCode: string, groupName: string): Pro
     },
   });
 
+
+  console.log(`Group spreadsheet created for ${groupCode} with ID: ${spreadsheetId}`);
+
   setCachedGroupSheetId(normalizedGroupCode, spreadsheetId);
 
   return spreadsheetId;
@@ -392,9 +395,78 @@ async function deleteGroupSpreadsheet(groupCode: string): Promise<void> {
 
 }
 
+// Convient Gets
+async function getAllCodes(): Promise<Array<string>> {
+  if (!rootSheetId) {
+    throw new Error('ROOT_SHEET_ID is not set in environment variables.');
+  }
+
+  const client = await auth.getClient();
+  const googleSheets = google.sheets({ version: 'v4', auth: client });
+  const response = await googleSheets.spreadsheets.values.get({
+      auth,
+      spreadsheetId: rootSheetId,
+    range: 'Sheet1!A:C',
+  });
+
+  const rows = response.data.values ?? [];
+  const returnList: Array<string> = [];
+
+  // Root schema: Code, Name, SheetId
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i] ?? [];
+    const codeCell = String(row[0] ?? '').trim().toUpperCase();
+    const sheetIdCandidate = String(row[2] ?? row[3] ?? row[1] ?? '').trim();
+    if (codeCell) {
+      setCachedGroupSheetId(codeCell, sheetIdCandidate);
+      returnList.push(codeCell);
+    }
+  }
+
+  return returnList;
+}
+
+const groupSheetCache: Record<string, GroupData> = {}; // group code : GroupSheetData
+
+function getGroupSheetCache(groupCode: string): GroupData | null {
+  const normalizedGroupCode = normalizeGroupCode(groupCode);
+  return groupSheetCache[normalizedGroupCode] || null;
+}
+function setGroupSheetCache(groupCode: string, data: GroupData): void {
+  const normalizedGroupCode = normalizeGroupCode(groupCode);
+  groupSheetCache[normalizedGroupCode] = data;
+}
+function invalidateGroupSheetCache(groupCode: string): void {
+  const normalizedGroupCode = normalizeGroupCode(groupCode);
+  delete groupSheetCache[normalizedGroupCode];
+}
+
+async function getAllMembers(groupCode: string): Promise<SheetMember[]> {
+  const groupData = await getSheetData(groupCode);
+  return groupData ? groupData.members : [];
+}
+async function getAllAvailabilities(groupCode: string): Promise<SheetAvailability[]> {
+  const groupData = await getSheetData(groupCode);
+  return groupData ? groupData.availability : [];
+}
+async function getAllIdeas(groupCode: string): Promise<SheetIdea[]> {
+  const groupData = await getSheetData(groupCode);
+  return groupData ? groupData.ideas : [];
+}
+async function getAllEvents(groupCode: string): Promise<SheetEvent[]> {
+  const groupData = await getSheetData(groupCode);
+  return groupData ? groupData.events : [];
+}
+
+
 // all the standard CRUD operations for each of the data types
 
 async function getSheetData(groupCode: string): Promise<GroupData | null> {
+  const cachedData = getGroupSheetCache(groupCode);
+  if (cachedData) {
+    return cachedData;
+  }
+
   const spreadsheetId = await getGroupSheetId(groupCode);
   const client = await auth.getClient();
   const googleSheets = google.sheets({ version: 'v4', auth: client });
@@ -471,13 +543,15 @@ async function getSheetData(groupCode: string): Promise<GroupData | null> {
       };
     }).filter((row: any) => row.UUID || row.id || row.title);
 
-    return {
+    const groupData = {
       name: groupName,
       members,
       availability,
       ideas,
       events,
     };
+    setGroupSheetCache(groupCode, groupData);
+    return groupData;
   } catch (error: any) {
     const status = error?.code || error?.response?.status;
     if (status === 404) {
@@ -487,9 +561,10 @@ async function getSheetData(groupCode: string): Promise<GroupData | null> {
   }
 }
 async function putSheetData(groupCode: string, data: SheetData) {
+  invalidateGroupSheetCache(groupCode);
   const spreadsheetId = await getGroupSheetId(groupCode);
   if ('name' in data && 'color' in data && 'timezone' in data) {
-    const member = data as SheetMembers;
+    const member = data as SheetMember;
     await appendRow(spreadsheetId, 'Members', [member.UUID, member.name, member.color, member.timezone]);
     return;
   }
@@ -516,11 +591,13 @@ async function putSheetData(groupCode: string, data: SheetData) {
 
 }
 async function updateSheetData(groupCode: string, data: SheetData): Promise<void> {
+    invalidateGroupSheetCache(groupCode);
     const spreadsheetId = await getGroupSheetId(groupCode);
     await deleteSheetData(spreadsheetId, data.UUID);
     await putSheetData(spreadsheetId, data);
 }
 async function deleteSheetData(groupCode: string, uuid: string): Promise<void> {
+    invalidateGroupSheetCache(groupCode);
     const spreadsheetId = await getGroupSheetId(groupCode);
     const client = await auth.getClient();
     const googleSheets = google.sheets({ version: 'v4', auth: client });
@@ -596,11 +673,14 @@ async function deleteSheetData(groupCode: string, uuid: string): Promise<void> {
     throw new Error(`No row found for UUID "${targetUuid}" in spreadsheet ${spreadsheetId}.`);
 }
 
-module.exports = {
-  createGroupSpreadsheet,
-  deleteGroupSpreadsheet,
-  putSheetData,
-  getSheetData,
-  updateSheetData,
-  deleteSheetData,
-};
+export { createGroupSpreadsheet, 
+          deleteGroupSpreadsheet,  
+          getAllCodes,
+          getAllMembers,
+          getAllAvailabilities,
+          getAllIdeas,
+          getAllEvents,
+          putSheetData, 
+          getSheetData, 
+          updateSheetData, 
+          deleteSheetData };

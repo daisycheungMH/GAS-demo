@@ -2,7 +2,7 @@ export interface SheetData {
   UUID: string;
 }
 
-export interface SheetMembers extends SheetData {
+export interface SheetMember extends SheetData {
   name: string;
   color: string;
   timezone: string;
@@ -38,7 +38,7 @@ export interface SheetEvent extends SheetData {
 
 export interface GroupData {
   name: string;
-  members: SheetMembers[];
+  members: SheetMember[];
   availability: SheetAvailability[];
   ideas: SheetIdea[];
   events: SheetEvent[];

@@ -3,7 +3,7 @@
 
 Pages: https://daisycheungmh.github.io/GAS-demo/
 
-## Run Locally
+Run Locally
 
 **Prerequisites:**  Node.js
 

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { doc, onSnapshot, getDoc, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db, initAuth } from "./lib/firebase";
-import { Group, Idea, Member } from "./types";
-import { syncGroupToSheet, syncGroupFromSheet } from "./lib/sheets";
+import { Group, Idea } from "./types";
+import { getSheetData } from "./lib/sheets";
 import { getAccessToken } from "./lib/firebase";
 import "./css/App.css";
 import Landing from "./components/Landing";
@@ -27,7 +27,6 @@ import {
   Bell,
   RefreshCw,
 } from "lucide-react";
-import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 
 export default function App() {
   const [groupId, setGroupId] = useState<string | null>(null);
@@ -72,8 +71,8 @@ export default function App() {
     }
   }, []);
 
-  // Listen to Firestore real-time updates for group
-  useEffect(() => {
+  // Listen to Firestore real-time updates for group NOTDONE? how do i replace this with google, you dont
+  useEffect(() => { // NOTDONE
     if (!groupId) {
       setGroup(null);
       return;
@@ -105,7 +104,7 @@ export default function App() {
   }, [groupId]);
 
   // Set up Firebase Auth Google OAuth state listener
-  useEffect(() => {
+  useEffect(() => { //NOTDONE
     initAuth(
       (user, token) => {
         setIsOwnerConnected(true);
@@ -161,18 +160,20 @@ export default function App() {
   };
 
   // Google Sheets Auto-sync trigger
-  const handleAutoSheetsSync = async () => {
+  const handleAutoSheetsSync = async () => { // onsync need? how much does this trigger? isnt this expensive?
+    // yeah this is SUPER expensive so lets not do this method
+    // how the hell are we gonna do this
     const token = getAccessToken();
     if (!token || !group || !group.sheetId) return;
 
     try {
-      await syncGroupToSheet(token, group.sheetId, {
-        name: group.name,
-        members: group.members,
-        availability: group.availability,
-        ideas: group.ideas,
-        events: group.events,
-      });
+      // await syncGroupToSheet(token, group.sheetId, { NOTDONE
+      //   name: group.name,
+      //   members: group.members,
+      //   availability: group.availability,
+      //   ideas: group.ideas,
+      //   events: group.events,
+      // });
     } catch (err) {
       console.error("Auto sheet sync failed:", err);
     }
@@ -196,21 +197,19 @@ export default function App() {
     setIsSyncingSheet(true);
     try {
       // Pull and Merge from sheet
-      const sheetData = await syncGroupFromSheet(token, group.sheetId);
-      
+      // const sheetData = await syncGroupFromSheet(token, group.sheetId);
+      const sheetData = await getSheetData(token);
+      if (!sheetData) {
+        alert("Failed to fetch data from Google Sheets. Please check your connection and sheet permissions.");
+        return;
+      }
+
       // Basic last-write-wins merge
       const updatedGroup = { ...group };
       if (sheetData.members) updatedGroup.members = sheetData.members as any;
       if (sheetData.availability) updatedGroup.availability = sheetData.availability as any;
       if (sheetData.ideas) updatedGroup.ideas = sheetData.ideas as any;
       if (sheetData.events) updatedGroup.events = sheetData.events as any;
-
-      // Update Firestore
-      const docRef = doc(db, "groups", group.groupId);
-      await updateDoc(docRef, updatedGroup);
-
-      // Push back fresh
-      await syncGroupToSheet(token, group.sheetId, updatedGroup);
 
       alert("Bidirectional synchronization completed successfully!");
     } catch (err: any) {
@@ -241,7 +240,7 @@ export default function App() {
 
     try {
       const docRef = doc(db, "groups", group.groupId);
-      await updateDoc(docRef, { ideas: updatedIdeas });
+      // await updateDoc(docRef, { ideas: updatedIdeas }); NOTDONE update about ideas?
       onSyncNeeded();
       setPrefilledProposal(null);
       setActiveTab("ideas");

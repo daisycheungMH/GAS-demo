@@ -1,31 +1,31 @@
-import { GroupData, SheetAvailability, SheetData, SheetEvent, SheetIdea, SheetMember } from "./data_interfaces";
+  import { GroupData, SheetAvailability, SheetData, SheetEvent, SheetIdea, SheetMember } from "./data_interfaces";
 
-const { google } = require('googleapis');
-const path = require('path');
+  import { google } from 'googleapis';
+  import path from 'path';
 
-// Initialize auth client with downloaded JSON key file
-const auth = new google.auth.GoogleAuth({
-  keyFile: path.join(__dirname, 'credentials.json'), 
-});
-const dbFolderId = process.env.DB_FOLDER_ID;
-const rootSheetId = process.env.ROOT_SHEET_ID;
-
-
-async function appendRow(spreadsheetId: string, sheetName: string, newDataArray: any[]) {
-  const client = await auth.getClient();
-  const googleSheets = google.sheets({ version: 'v4', auth: client });
-
-  await googleSheets.spreadsheets.values.append({
-    auth,
-    spreadsheetId,
-    range: `${sheetName}!A:Z`,
-    valueInputOption: 'USER_ENTERED',
-    resource: {
-      values: [newDataArray], // Example: ['John Doe', 'john@example.com', 'Active']
-    },
+  // Initialize auth client with downloaded JSON key file
+  const auth = new google.auth.GoogleAuth({
+    keyFile: path.join(__dirname, 'credentials.json'), 
   });
-  console.log('Row inserted successfully!');
-}
+  const dbFolderId = process.env.DB_FOLDER_ID;
+  const rootSheetId = process.env.ROOT_SHEET_ID;
+
+
+  async function appendRow(spreadsheetId: string, sheetName: string, newDataArray: any[]) {
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({ version: 'v4', auth: client });
+
+    await googleSheets.spreadsheets.values.append({
+      auth,
+      spreadsheetId,
+      range: `${sheetName}!A:Z`,
+      valueInputOption: 'USER_ENTERED',
+      resource: {
+        values: [newDataArray], // Example: ['John Doe', 'john@example.com', 'Active']
+      },
+    });
+    console.log('Row inserted successfully!');
+  }
 async function createSpreadsheet(sheetName: string): Promise<string> {
     const url = 'https://sheets.googleapis.com/v4/spreadsheets';
     const payload = {

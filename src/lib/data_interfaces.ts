@@ -11,12 +11,10 @@ export interface SheetMember extends SheetData {
 export interface SheetAvailability extends SheetData {
   member: string;
   date: string; // YYYY-MM-DD 
-  maybeStatusCode: string; // interger -> hex color code 0xFFFFFF
-  availableStatusCode: string; // interger -> hex color code 0xFFFFFF
+  statusCode: string; // interger -> hex color code 0xFFFFFF
 }
 
 export interface SheetIdea extends SheetData {
-  id: string;
   title: string;
   suggestedBy: string; // name of sheet member
   datetime: string; // ISO or empty
@@ -27,13 +25,12 @@ export interface SheetIdea extends SheetData {
 }
 
 export interface SheetEvent extends SheetData {
-  id: string;
   title: string;
   datetime: string;
   place: string;
   links: string;
   notes: string;
-  RSVPs: Record<string, 'going' | 'maybe' | 'cant'>;
+  rsvps: Record<string, 'going' | 'maybe' | 'cant'>;
 }
 
 export interface GroupData {

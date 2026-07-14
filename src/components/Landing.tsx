@@ -3,7 +3,7 @@ import { COMMON_TIMEZONES, getLocalTimezone } from "../lib/timezone";
 import { PRESET_COLORS } from "../types";
 import { Calendar, Lock, AlertCircle } from "lucide-react";
 import "../css/Landing.css";
-import { getAllCodes, getAllMembers, putSheetData, createGroupSpreadsheet } from "../lib/sheets";
+import { readMembers, createMembers } from "../lib/sheets";
 import { SheetMember } from "../lib/data_interfaces";
 
 interface LandingProps {
@@ -82,8 +82,9 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
         color: createColor,
         timezone: createTimezone,
       };
-      await createGroupSpreadsheet(groupId, groupName.trim());
-      await putSheetData(groupId, newMember);     
+      // await createGroupSpreadsheet(groupId, groupName.trim());
+      // ability to create group, retired. unccessary as only botc is using this
+      await createMembers([newMember]);
       
       localStorage.setItem("meetLesbians_last_groupName", groupName.trim());
       localStorage.setItem("meetLesbians_last_nickname", createMemberName.trim());
@@ -113,7 +114,8 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
       // const groupDocRef = doc(db, "groups", code);
       // const docSnap = await getDoc(groupDocRef);
 
-      const allCodes = await getAllCodes();
+      const allCodes: string[] = []; // await getAllCodes();
+      // retired the need to get codes
 
       if (!allCodes.includes(code)) {
         setErrorMsg(`Group with code "${code}" not found. Check the code!`);
@@ -121,7 +123,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
         return;
       }
 
-      const allMembers = await getAllMembers(code);
+      const allMembers = await readMembers();
       const isNameTaken = allMembers.some(
         (m) => m.name.toLowerCase() === joinMemberName.trim().toLowerCase()
       );
@@ -139,7 +141,7 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
         timezone: joinTimezone,
       };
 
-      await putSheetData(code, newMember);
+      await createMembers([newMember]);
 
       localStorage.setItem("meetLesbians_last_groupCode", code);
       localStorage.setItem("meetLesbians_last_nickname", joinMemberName.trim());

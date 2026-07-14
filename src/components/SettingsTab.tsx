@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Group, PRESET_COLORS } from "../types";
 import { doc, updateDoc } from "firebase/firestore";
 import { db, googleSignIn, logout } from "../lib/firebase";
-import { } from "../lib/sheets";
+import { createSpreadsheet } from "../lib/sheets";
 import { Settings, Copy, Check, FileSpreadsheet, LogIn, LogOut, ShieldAlert, Sparkles, AlertCircle, RefreshCw } from "lucide-react";
 import "../css/SettingsTab.css";
 
@@ -76,8 +76,7 @@ export default function SettingsTab({
       const res = await googleSignIn();
       if (res) {
         setStatusMsg("Google authenticated! Creating group Google Sheet...");
-        // const newSheetId = await createSpreadsheet(res.accessToken, group.name); NOTDONE
-        const newSheetId = "dummySheetId"; // Placeholder for the new sheet ID
+        const newSheetId = await createSpreadsheet(res.accessToken, group.name);
         
         // Update Firestore Group
         const docRef = doc(db, "groups", group.groupId);

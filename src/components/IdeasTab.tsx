@@ -63,7 +63,7 @@ export default function IdeasTab({
     }
   }, [prefilledProposal]);
 
-  const handleSubmitIdea = async (e: React.FormEvent) => { // NOTDONE
+  const handleSubmitIdea = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
 
@@ -100,7 +100,7 @@ export default function IdeasTab({
     }
   };
 
-  const handleVote = async (ideaId: string) => { // NOTDONE
+  const handleVote = async (ideaId: string) => {
     const updatedIdeas = group.ideas.map((idea) => {
       if (idea.id === ideaId) {
         const hasVoted = idea.votes.includes(currentUser);
@@ -121,7 +121,7 @@ export default function IdeasTab({
     }
   };
 
-  const handleSignup = async (ideaId: string) => { // NOTDONE
+  const handleSignup = async (ideaId: string) => {
     const updatedIdeas = group.ideas.map((idea) => {
       if (idea.id === ideaId) {
         const currentSignups = idea.signups || [];
@@ -143,7 +143,7 @@ export default function IdeasTab({
     }
   };
 
-  const handleAddAttachment = async (ideaId: string, type: 'link' | 'photo', name: string, url: string) => { // NOTDONE
+  const handleAddAttachment = async (ideaId: string, type: 'link' | 'photo', name: string, url: string) => {
     if (!name.trim() || !url.trim()) {
       alert("Please fill in both a description and paste a valid link/file!");
       return;
@@ -173,7 +173,7 @@ export default function IdeasTab({
     }
   };
 
-  const handleDeleteIdea = async (ideaId: string, e: React.MouseEvent) => { // NOTDONE
+  const handleDeleteIdea = async (ideaId: string, e: React.MouseEvent) => {
     e.stopPropagation(); // Avoid triggering open modal click
     if (!window.confirm("Are you sure you want to delete this proposal?")) return;
 
@@ -187,7 +187,7 @@ export default function IdeasTab({
     }
   };
 
-  const handlePromoteToEvent = async (idea: Idea) => { // NOTDONE
+  const handlePromoteToEvent = async (idea: Idea) => {
     if (!idea.datetime) {
       alert("Please assign a Date & Time to this proposal before confirming!");
       return;

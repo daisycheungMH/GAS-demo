@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { COMMON_TIMEZONES, getLocalTimezone } from "../lib/timezone";
 import { PRESET_COLORS } from "../types";
+import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { db } from "../lib/firebase";
 import { Calendar, Lock, AlertCircle } from "lucide-react";
 import "../css/Landing.css";
-import { readMembers, createMembers } from "../lib/sheets";
-import { SheetMember } from "../lib/data_interfaces";
 
 interface LandingProps {
   onGroupLoaded: (groupId: string, memberName: string) => void;
@@ -76,15 +76,28 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
 
     try {
       const groupId = Math.random().toString(36).substring(2, 8).toUpperCase();
-      const newMember: SheetMember = {
-        UUID: crypto.randomUUID(),
-        name: createMemberName.trim(),
-        color: createColor,
-        timezone: createTimezone,
+      const groupDocRef = doc(db, "groups", groupId);
+      const newGroupData = {
+        groupId,
+        name: groupName,
+        sheetId: "1bHcNP4bJI8-2QSxIS9zSgD4Gay5BYFqa8LbbdWM64bY",
+        sheetOwnerUid: "",
+        createdAt: new Date().toISOString(),
+        members: [
+          {
+            name: createMemberName.trim(),
+            color: createColor,
+            timezone: createTimezone,
+          }
+        ],
+        availability: [],
+        ideas: [],
+        events: []
       };
-      // await createGroupSpreadsheet(groupId, groupName.trim());
-      // ability to create group, retired. unccessary as only botc is using this
-      await createMembers([newMember]);
+
+      setDoc(groupDocRef, newGroupData).catch((err) => {
+        console.error("Delayed setDoc error:", err);
+      });
       
       localStorage.setItem("meetLesbians_last_groupName", groupName.trim());
       localStorage.setItem("meetLesbians_last_nickname", createMemberName.trim());
@@ -111,20 +124,18 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
     const code = joinCode.trim().toUpperCase();
 
     try {
-      // const groupDocRef = doc(db, "groups", code);
-      // const docSnap = await getDoc(groupDocRef);
+      const groupDocRef = doc(db, "groups", code);
+      const docSnap = await getDoc(groupDocRef);
 
-      const allCodes: string[] = []; // await getAllCodes();
-      // retired the need to get codes
-
-      if (!allCodes.includes(code)) {
+      if (!docSnap.exists()) {
         setErrorMsg(`Group with code "${code}" not found. Check the code!`);
         setIsLoading(false);
         return;
       }
 
-      const allMembers = await readMembers();
-      const isNameTaken = allMembers.some(
+      const groupData = docSnap.data();
+      const existingMembers: any[] = groupData.members || [];
+      const isNameTaken = existingMembers.some(
         (m) => m.name.toLowerCase() === joinMemberName.trim().toLowerCase()
       );
 
@@ -134,14 +145,17 @@ export default function Landing({ onGroupLoaded }: LandingProps) {
         return;
       }
 
-      const newMember: SheetMember = {
-        UUID: crypto.randomUUID(),
+      const newMember = {
         name: joinMemberName.trim(),
         color: joinColor,
         timezone: joinTimezone,
       };
 
-      await createMembers([newMember]);
+      updateDoc(groupDocRef, {
+        members: arrayUnion(newMember),
+      }).catch((err) => {
+        console.error("Delayed updateDoc error:", err);
+      });
 
       localStorage.setItem("meetLesbians_last_groupCode", code);
       localStorage.setItem("meetLesbians_last_nickname", joinMemberName.trim());

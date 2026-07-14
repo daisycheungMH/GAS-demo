@@ -1,0 +1,43 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Populate credentials file
+        shell: bash
+        env:
+          CREDENTIALS_JSON_CONTENT: ${{ secrets.CREDENTIALS_JSON_CONTENT }}
+        run: |
+          if [ -n "$CREDENTIALS_JSON_CONTENT" ]; then
+            printf '%s' "$CREDENTIALS_JSON_CONTENT" > credentials.json
+          fi
+
+      - name: Run tests
+        env:
+          DB_API_URL: ${{ secrets.DB_API_URL }}
+          TEST_DB_API_URL: ${{ secrets.TEST_DB_API_URL }}
+        run: npm run test
+    
+ 

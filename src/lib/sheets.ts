@@ -59,4 +59,8 @@ export async function deleteEvents(uuids: string[]): Promise<boolean> {
   return false;
 }
 
+// higher level
+export async function pushAvailabilities(availabilities: SheetAvailability[]): Promise<boolean> {
+  return createAvailabilities(availabilities); // NOT DONOE
+}
 

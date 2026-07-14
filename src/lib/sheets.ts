@@ -6,65 +6,57 @@
 const db_api_url = process.env.DB_API_URL;
 const test_db_api_url = process.env.TEST_DB_API_URL ? process.env.TEST_DB_API_URL : "";
 
-function normalizeGroupCode(groupCode: string): string {
-  return groupCode.trim().toUpperCase();
+// CRUD functions straight to the end point
+async function createMembers(members: SheetMember[]): Promise<boolean> {
+  return false;
+}
+async function createAvailabilities(availabilities: SheetAvailability[]): Promise<boolean> {
+  return false;
+}
+async function createIdeas(ideas: SheetIdea[]): Promise<boolean> {
+  return false;
+}
+async function createEvents(events: SheetEvent[]): Promise<boolean> {
+  return false;
 }
 
-async function getAllMembers(groupCode: string): Promise<SheetMember[]> {
-  const groupData = await getSheetData(groupCode);
-  return groupData ? groupData.members : [];
+async function readMembers(uuids: string[] = []): Promise<SheetMember[]> {
+  return [];
 }
-async function getAllAvailabilities(groupCode: string): Promise<SheetAvailability[]> {
-  const groupData = await getSheetData(groupCode);
-  return groupData ? groupData.availability : [];
+async function readAvailabilities(uuids: string[] = []): Promise<SheetAvailability[]> {
+  return [];
 }
-async function getAllIdeas(groupCode: string): Promise<SheetIdea[]> {
-  const groupData = await getSheetData(groupCode);
-  return groupData ? groupData.ideas : [];
+async function readIdeas(uuids: string[] = []): Promise<SheetIdea[]> {
+  return [];
 }
-async function getAllEvents(groupCode: string): Promise<SheetEvent[]> {
-  const groupData = await getSheetData(groupCode);
-  return groupData ? groupData.events : [];
+async function readEvents(uuids: string[] = []): Promise<SheetEvent[]> {
+  return [];
 }
 
-
-// all the standard CRUD operations for each of the data types
-
-async function getSheetData(groupCode: string): Promise<GroupData | null> { // NOTDONE
-  return null;
+async function updateMembers(members: SheetMember[]): Promise<boolean> {
+  return false;
 }
-async function putSheetData(groupCode: string, data: SheetData) { // NOTDONE
-  if ('name' in data && 'color' in data && 'timezone' in data) {
-    return;
-  }
-
-  if ('member' in data && 'date' in data && 'maybeStatusCode' in data && 'availableStatusCode' in data) {
-    return;
-  }
-
-  if ('suggestedBy' in data && 'votes' in data) {
-    return;
-  }
-
-  if ('RSVPs' in data) {
-    return;
-  }
-
-  throw new Error('Unsupported SheetData type for putSheetData.');
-
+async function updateAvailabilities(availabilities: SheetAvailability[]): Promise<boolean> {
+  return false;
 }
-async function updateSheetData(groupCode: string, data: SheetData): Promise<void> { // NOTDONE
-    return;
+async function updateIdeas(ideas: SheetIdea[]): Promise<boolean> {
+  return false;
 }
-async function deleteSheetData(groupCode: string, uuid: string): Promise<void> { // NOTDONE
-    return;
+async function updateEvents(events: SheetEvent[]): Promise<boolean> {
+  return false;
 }
 
-export {  getAllMembers,
-          getAllAvailabilities,
-          getAllIdeas,
-          getAllEvents,
-          putSheetData, 
-          getSheetData, 
-          updateSheetData, 
-          deleteSheetData };
+async function deleteMembers(uuids: string[]): Promise<boolean> {
+  return false;
+}
+async function deleteAvailabilities(uuids: string[]): Promise<boolean> {
+  return false;
+}
+async function deleteIdeas(uuids: string[]): Promise<boolean> {
+  return false;
+}
+async function deleteEvents(uuids: string[]): Promise<boolean> {
+  return false;
+}
+
+
